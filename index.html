@@ -9,14 +9,24 @@
     <script type="text/jsx">
         const app = document.getElementById('app');
 
-        function Header() {
-            return (<h1>NBA News App 🏀</h1>)
+        function Header({title, prop1}) {
+            // props is an ojb {}
+            console.log(title, prop1)
+            return (<h1>{title? title:'Default title'}</h1>)
         }
 
         function HomePage() {
+            const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+
             return (
                 <div>
-                    <Header />
+                    <Header title="React 💙" prop1="some value 🏀" />
+                    <ul>
+                        {names.map( (name => {
+                            <li key="name">{name}</li>
+                        }))
+                        }
+                    </ul>
                 </div>
             )
         }
