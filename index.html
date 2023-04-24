@@ -13,25 +13,32 @@
             // props is an ojb {}
             console.log(title, prop1)
             return (<h1>{title? title:'Default title'}</h1>)
-        }
+    }
 
-        function HomePage() {
-            const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+    function HomePage() {
+    const [likes, setLikes] = React.useState(0);
+    const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
 
-            return (
-                <div>
-                    <Header title="React 💙" prop1="some value 🏀" />
-                    <ul>
-                        {names.map( (name => {
-                            <li key="name">{name}</li>
-                        }))
-                        }
-                    </ul>
-                </div>
-            )
-        }
+    function handleClick() {
+        setLikes(likes+1)
+    }
 
-        ReactDOM.render(<HomePage />, app);
+    return (
+    <div>
+        <Header title="React 💙" prop1="some value 🏀" />
+        <ul>
+            {names.map( (name => {
+            <li key="name">{name}</li>
+            }))
+            }
+        </ul>
+        <button onClick={handleClick}>Like {likes}</button>
+    </div>
+    )
+    }
+
+    ReactDOM.render(
+    <HomePage />, app);
 
     </script>
 </body>
