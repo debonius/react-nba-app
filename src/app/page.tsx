@@ -1,7 +1,6 @@
 // import Image from 'next/image'
 // import styles from './page.module.css'
-// Components
-import Navigation from '../components/shared/Navigation';
+import Navigation from '../app/components/shared/Navigation';
 
 function WelcomeMessage() {
   return (
