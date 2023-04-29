@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Navigation() {
     return (
-        <nav>Navigation works!
+        <nav>
             <Link href="/">Home</Link>
             <Link href="search">Search</Link>
             <Link href="scores">Scores</Link>
