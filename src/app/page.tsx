@@ -1,12 +1,14 @@
+'use client';
 // import Image from 'next/image'
 // import styles from './page.module.css'
+import { useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 
-const URL = 'https://free-nba.p.rapidapi.com/games?page=0&per_page=25';
+const URL = 'https://free-nba.p.rapidapi.com/games?page=1&per_page=25';
 const OPTIONS = {
   method: 'GET',
   headers: {
-    'X-RapidAPI-Key': '7b95667d0emsh8d9d96107126432p1809fdjsn526f18e74399',
+    'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
   }
 };
 
@@ -16,8 +18,6 @@ const getScores = function () {
     .then(response => response.json())
     .then(data => console.info(data))
 }
-
-getScores();
 
 function WelcomeMessage() {
   return (
@@ -33,6 +33,11 @@ function LatestScores() {
 }
 
 export default function Home() {
+
+  useEffect(() => {
+    getScores();
+  }, [])
+
   return (
     <>
       <WelcomeMessage />
