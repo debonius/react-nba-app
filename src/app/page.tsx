@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 
-const URL = 'https://free-nba.p.rapidapi.com/games?page=1&per_page=25';
+const URL = 'https://free-nba.p.rapidapi.com/games?per_page=25';
 const OPTIONS = {
   method: 'GET',
   headers: {
@@ -21,8 +21,11 @@ const getScores = function () {
 
 function WelcomeMessage() {
   return (
-    <p className='welcome-message'>Check last NBA scores, stay update about teams and players.
-    </p>
+    <>
+      <h1>Welcome!</h1>
+      <p className='welcome-message'>Check last NBA scores, stay update about teams and players.
+      </p>
+    </>
   )
 }
 
