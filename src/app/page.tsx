@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 
+let gameScores: any[] = [];
 const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
 const OPTIONS = {
   method: 'GET',
@@ -14,14 +15,24 @@ const OPTIONS = {
 
 const getScores = function () {
   console.log('called getScores()');
+
   fetch(URL, OPTIONS)
     .then(response => response.json())
     .then(data => {
-      const list = data.slice().sort((a: any, b: any) => {
+      // data.sort((a: any, b: any) => {
+      //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+      // })
+      let scores = data.slice().sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
-      })
-      console.log(list);
-    })
+      });
+      console.log(scores);
+    });
+
+  // gameScores.sort((a, b) => {
+  //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+  // });
+
+  console.log(gameScores);
 }
 
 function WelcomeMessage() {
@@ -35,6 +46,7 @@ function WelcomeMessage() {
 }
 
 function LatestScores() {
+
   return (
     <h1>Latest scores</h1>
   )
