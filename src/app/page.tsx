@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 
-const URL = 'https://free-nba.p.rapidapi.com/games?per_page=25';
+const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
 const OPTIONS = {
   method: 'GET',
   headers: {
@@ -16,7 +16,12 @@ const getScores = function () {
   console.log('called getScores()');
   fetch(URL, OPTIONS)
     .then(response => response.json())
-    .then(data => console.info(data))
+    .then(data => {
+      const list = data.slice().sort((a: any, b: any) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      })
+      console.log(list);
+    })
 }
 
 function WelcomeMessage() {
