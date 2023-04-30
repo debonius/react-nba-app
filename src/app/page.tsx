@@ -3,8 +3,9 @@
 // import styles from './page.module.css'
 import { useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
+import Game from './api/game';
 
-let gameScores: any[] = [];
+let scores: Game[] = [];
 const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
 const OPTIONS = {
   method: 'GET',
@@ -22,7 +23,7 @@ const getScores = function () {
       // data.sort((a: any, b: any) => {
       //   return new Date(b.date).getTime() - new Date(a.date).getTime();
       // })
-      let scores = data.slice().sort((a, b) => {
+      scores = data.slice().sort((a: Game, b: Game) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       });
       console.log(scores);
@@ -32,7 +33,7 @@ const getScores = function () {
   //   return new Date(b.date).getTime() - new Date(a.date).getTime();
   // });
 
-  console.log(gameScores);
+  console.log(scores);
 }
 
 function WelcomeMessage() {
