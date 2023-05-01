@@ -1,11 +1,10 @@
 'use client';
 // import Image from 'next/image'
 // import styles from './page.module.css'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 import Game from './api/game';
 
-let scores: Game[] = [];
 const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
 const OPTIONS = {
   method: 'GET',
@@ -13,28 +12,6 @@ const OPTIONS = {
     'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
   }
 };
-
-const getScores = function () {
-  console.log('called getScores()');
-
-  fetch(URL, OPTIONS)
-    .then(response => response.json())
-    .then(data => {
-      // data.sort((a: any, b: any) => {
-      //   return new Date(b.date).getTime() - new Date(a.date).getTime();
-      // })
-      scores = data.slice().sort((a: Game, b: Game) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
-      console.log(scores);
-    });
-
-  // gameScores.sort((a, b) => {
-  //   return new Date(b.date).getTime() - new Date(a.date).getTime();
-  // });
-
-  console.log(scores);
-}
 
 function WelcomeMessage() {
   return (
@@ -47,18 +24,35 @@ function WelcomeMessage() {
 }
 
 function LatestScores() {
+  const [scores, setScores] = useState<Game>();
+
+  const getScores = () => {
+    fetch(URL, OPTIONS)
+      .then(response => response.json())
+      .then(data => {
+        setScores(data);
+        // scores.sort((a: Game, b: Game) => {
+        //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+        // });
+        console.log(scores);
+      });
+  }
+
+  useEffect(() => getScores(), [])
 
   return (
-    <h1>Latest scores</h1>
+    <div className='latest-scores'>
+      <h1>Latest scores</h1>
+      <ul>
+        {scores.map(score => (
+          <li key={score.id}>{score.home_team} vs {score.visitor_team}</li>
+        ))}
+      </ul>
+    </div >
   )
 }
 
 export default function Home() {
-
-  useEffect(() => {
-    getScores();
-  }, [])
-
   return (
     <>
       <WelcomeMessage />
