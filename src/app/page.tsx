@@ -38,7 +38,10 @@ function LatestScores() {
       });
   }
 
-  useEffect(() => getScores(), [])
+  useEffect(() => getScores(), []);
+  // useEffect(() => {
+  //   getScores()
+  // }, [])
 
   return (
     <div className='latest-scores'>
