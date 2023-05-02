@@ -24,13 +24,16 @@ function WelcomeMessage() {
 }
 
 function LatestScores() {
-  const [scores, setScores] = useState<Game[]>();
+  const [scores, setScores] = useState<Game[]>([]);
+  const [gotScores, setgotScores] = useState<Boolean>(false);
 
   const getScores = () => {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(data => {
         setScores(data);
+        setgotScores(true);
+        console.log(gotScores);
       });
   }
 
