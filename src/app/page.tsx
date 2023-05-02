@@ -3,7 +3,7 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
-import Game from './api/game';
+import { Games } from './api/game';
 
 const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
 const OPTIONS = {
@@ -24,23 +24,25 @@ function WelcomeMessage() {
 }
 
 function LatestScores() {
-  const [scores, setScores] = useState<Game[]>([]);
-  const [gotScores, setgotScores] = useState<Boolean>(false);
+  const [scores, setScores] = useState<Games>([]);
+  const [gotScores, setGotScores] = useState<Boolean>(false);
+
+
 
   const getScores = () => {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(data => {
         setScores(data);
-        setgotScores(true);
+        setGotScores(true);
         console.log(gotScores);
+        console.log('scores:', scores);
       });
   }
 
   // scores.sort((a: Game, b: Game) => {
   //   return new Date(b.date).getTime() - new Date(a.date).getTime();
   // });
-  console.log('scores:', scores);
 
   useEffect(() => getScores(), []);
 
@@ -49,6 +51,7 @@ function LatestScores() {
       <h1>Latest scores</h1>
       <ul>
         {scores && scores.map(score => (
+          // <li key={score.id}>{score.id}</li>
           <li key={score.id}>{score.home_team} vs {score.visitor_team}</li>
         ))}
       </ul>
