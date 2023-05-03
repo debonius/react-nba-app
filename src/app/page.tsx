@@ -34,7 +34,6 @@ function LatestScores() {
       .then(obj => {
         setScores(obj.data);
         setGotScores(true);
-        console.log(gotScores);
       });
   }
 
@@ -48,7 +47,7 @@ function LatestScores() {
     <div className='latest-scores'>
       <h1>Latest scores</h1>
       <ul>
-        {scores && scores.map(score => (
+        {gotScores && scores.map(score => (
           <li key={score.id}>{score.home_team.full_name} vs {score.visitor_team.full_name}</li>
         ))}
       </ul>
