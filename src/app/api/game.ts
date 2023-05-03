@@ -1,7 +1,5 @@
 import Team from './team';
 
-export type Games = Game[];
-
 export default interface Game {
     "id": number;
     "date": string;
