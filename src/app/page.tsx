@@ -34,6 +34,7 @@ function LatestScores() {
       .then(obj => {
         setScores(obj.data);
         setGotScores(true);
+        console.log(obj.data)
       });
   }
 
@@ -48,7 +49,12 @@ function LatestScores() {
       <h1>Latest scores</h1>
       <ul>
         {gotScores && scores.map(score => (
-          <li key={score.id}>{score.home_team.full_name} vs {score.visitor_team.full_name}</li>
+          <li key={score.id}>
+            <div>
+              {score.home_team.abbreviation} {score.home_team_score} vs {score.visitor_team_score} {score.visitor_team.abbreviation}
+            </div>
+            <span>{new Date(score.date).getFullYear()}/{new Date(score.date).getMonth()}/{new Date(score.date).getDay()}</span>
+          </li>
         ))}
       </ul>
     </div >
