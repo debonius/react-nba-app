@@ -25,7 +25,7 @@ function WelcomeMessage() {
 
 function LatestScores() {
   type Games = Game[];
-  const [scores, setScores] = useState<Games[]>([]);
+  const [scores, setScores] = useState<Games>([]);
   const [gotScores, setGotScores] = useState<Boolean>(false);
 
   const getScores = () => {
@@ -44,15 +44,12 @@ function LatestScores() {
 
   useEffect(() => getScores(), []);
 
-  console.log('scores:', scores);
-  console.log('typeof:', typeof scores);
-
   return (
     <div className='latest-scores'>
       <h1>Latest scores</h1>
       <ul>
         {scores && scores.map(score => (
-          <li key={score.id}>{score.home_team} vs {score.visitor_team}</li>
+          <li key={score.id}>{score.home_team.full_name} vs {score.visitor_team.full_name}</li>
         ))}
       </ul>
     </div >
