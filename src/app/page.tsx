@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 import Game from './api/game';
 
-const URL = 'https://free-nba.p.rapidapi.com/games?per_page=10';
+const URL = 'https://free-nba.p.rapidapi.com/games?per_page=25';
 const OPTIONS = {
   method: 'GET',
   headers: {
@@ -17,7 +17,7 @@ function WelcomeMessage() {
   return (
     <>
       <h1>Welcome!</h1>
-      <p className='welcome-message'>Check latest NBA scores and stats, check teams and players.
+      <p className='welcome-message'>Check latest NBA scores and stats, teams and players.
       </p>
     </>
   )
@@ -32,15 +32,14 @@ function LatestScores() {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(obj => {
-        setScores(obj.data);
+        setScores(obj.data.sort((a: Game, b: Game) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        }));
         setGotScores(true);
         console.log(obj.data)
       });
   }
 
-  // scores.sort((a: Game, b: Game) => {
-  //   return new Date(b.date).getTime() - new Date(a.date).getTime();
-  // });
 
   useEffect(() => getScores(), []);
 
