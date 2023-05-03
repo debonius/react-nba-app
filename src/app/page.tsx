@@ -3,7 +3,7 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
-import Game from './api/game';
+import Game from './api/types/games';
 
 const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=1000';
 const OPTIONS = {
