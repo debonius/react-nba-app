@@ -64,10 +64,7 @@ function LatestScores() {
           </li>
         ))}
       </ul>
-      {meta &&
-        <Pagination current_page={meta.current_page} />
-      }
-
+      {meta && <Pagination current_page={meta.current_page} />}
     </div >
   )
 }
