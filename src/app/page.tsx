@@ -3,7 +3,10 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
+import Pagination from '../app/components/shared/Pagination'
 import Game from './api/types/games';
+// MUI
+
 
 const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
 const OPTIONS = {
@@ -69,6 +72,7 @@ export default function Home() {
     <>
       <WelcomeMessage />
       <LatestScores />
+      <Pagination />
       <Navigation />
     </>
   )
