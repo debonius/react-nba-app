@@ -32,7 +32,7 @@ function WelcomeMessage() {
 function LatestScores() {
   type Games = Game[];
   const [scores, setScores] = useState<Games>([]);
-  const [gotScores, setGotScores] = useState<Boolean>(false);
+  const [fetchedSuccess, setGotScores] = useState<Boolean>(false);
 
   const getScores = () => {
     fetch(URL, OPTIONS)
@@ -52,7 +52,7 @@ function LatestScores() {
     <div className='latest-scores'>
       <h1>Latest scores</h1>
       <ul>
-        {gotScores && scores.map(score => (
+        {fetchedSuccess && scores.map(score => (
           <li key={score.id}>
             <div>
               {score.home_team.abbreviation} {score.home_team_score} vs {score.visitor_team_score} {score.visitor_team.abbreviation}
