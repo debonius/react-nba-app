@@ -7,14 +7,6 @@ import Pagination from '../app/components/shared/Pagination'
 import Game from './api/types/games';
 import Meta from './api/types/meta';
 
-const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
-const OPTIONS = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
-  }
-};
-
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"];
 
@@ -33,6 +25,13 @@ function LatestScores() {
   const [scores, setScores] = useState<Games>([]);
   const [meta, setMeta] = useState<Meta>();
   const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
+  const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
+  const OPTIONS = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
+    }
+  };
 
   const getScores = () => {
     fetch(URL, OPTIONS)
