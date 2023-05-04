@@ -1,8 +1,6 @@
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
-// import Meta from '../../api/types/meta';
 
-// export default function Pagination({ meta, setPerPage, perPage }) {
 export default function Pagination({ meta, setPerPage, perPage, getScores }) {
     const [page, setPage] = React.useState(2);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
