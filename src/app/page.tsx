@@ -39,9 +39,10 @@ function LatestScores() {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(obj => {
-        setScores(obj.data.sort((a: Game, b: Game) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        }));
+        // setScores(obj.data.sort((a: Game, b: Game) => {
+        //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+        // }));
+        setScores(obj.data);
         setMeta(obj.meta);
         setFetchSuccess(true);
         // console.warn('meta: ', meta);
