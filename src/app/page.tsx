@@ -41,8 +41,6 @@ function LatestScores() {
         setScores(obj.data);
         setMeta(obj.meta);
         setFetchSuccess(true);
-        console.info('meta:', meta);
-        console.log('perPage: ', perPage);
       });
   };
 
