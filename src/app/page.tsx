@@ -25,10 +25,11 @@ function LatestScores() {
   const [scores, setScores] = useState<Games>([]);
   const [meta, setMeta] = useState<Meta>();
   const [perPage, setPerPage] = useState<Number>(10);
+  const [currentPage, setcurrentPage] = useState<Number>(1);
   const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
 
   const getScores = () => {
-    const URL = `https://free-nba.p.rapidapi.com/games?page=${meta?.current_page}&per_page=${perPage}`;
+    const URL = `https://free-nba.p.rapidapi.com/games?page=${currentPage}&per_page=${perPage}`;
     const OPTIONS = {
       method: 'GET',
       headers: {
@@ -41,6 +42,9 @@ function LatestScores() {
         setScores(obj.data);
         setMeta(obj.meta);
         setFetchSuccess(true);
+        // console.warn('meta: ', meta);
+        // console.warn('perPage: ', perPage);
+        // console.warn('currentPage: ', currentPage);
       });
   };
 
@@ -68,6 +72,7 @@ function LatestScores() {
           setPerPage={setPerPage}
           perPage={perPage}
           getScores={getScores}
+          setcurrentPage={setcurrentPage}
         />
       }
     </div >
