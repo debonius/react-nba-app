@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 import Game from './api/types/games';
 
-const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=1000';
+const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
 const OPTIONS = {
   method: 'GET',
   headers: {
@@ -35,9 +35,7 @@ function LatestScores() {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(obj => {
-        setScores(obj.data.sort((a: Game, b: Game) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        }));
+        setScores(obj.data);
         setGotScores(true);
         console.log(obj)
         console.log(obj.data)
