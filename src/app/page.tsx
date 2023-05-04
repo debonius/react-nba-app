@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
 import Pagination from '../app/components/shared/Pagination'
 import Game from './api/types/games';
-// MUI
-
+import Meta from './api/types/meta';
 
 const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
 const OPTIONS = {
@@ -32,16 +31,18 @@ function WelcomeMessage() {
 function LatestScores() {
   type Games = Game[];
   const [scores, setScores] = useState<Games>([]);
-  const [fetchedSuccess, setGotScores] = useState<Boolean>(false);
+  const [meta, setMeta] = useState<Meta>();
+  const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
 
   const getScores = () => {
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(obj => {
         setScores(obj.data);
-        setGotScores(true);
-        console.log(obj)
-        console.log(obj.data)
+        setMeta(obj.meta);
+        setFetchSuccess(true);
+        console.info(obj);
+        console.info('meta:', meta);
       });
   }
 
@@ -52,7 +53,7 @@ function LatestScores() {
     <div className='latest-scores'>
       <h1>Latest scores</h1>
       <ul>
-        {fetchedSuccess && scores.map(score => (
+        {fetchSuccess && scores.map(score => (
           <li key={score.id}>
             <div>
               {score.home_team.abbreviation} {score.home_team_score} vs {score.visitor_team_score} {score.visitor_team.abbreviation}
@@ -63,6 +64,10 @@ function LatestScores() {
           </li>
         ))}
       </ul>
+      {meta &&
+        <Pagination current_page={meta.current_page} />
+      }
+
     </div >
   )
 }
@@ -72,7 +77,6 @@ export default function Home() {
     <>
       <WelcomeMessage />
       <LatestScores />
-      <Pagination />
       <Navigation />
     </>
   )
