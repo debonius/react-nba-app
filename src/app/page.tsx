@@ -3,7 +3,7 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
-import TablePagination from '../app/components/shared/TablePagination'
+import Pagination from '../app/components/shared/TablePagination'
 import Game from './api/types/games';
 import Meta from './api/types/meta';
 
@@ -24,24 +24,25 @@ function LatestScores() {
   type Games = Game[];
   const [scores, setScores] = useState<Games>([]);
   const [meta, setMeta] = useState<Meta>();
+  const [perPage, setPerPage] = useState<Number>(10);
   const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
-  const URL = `https://free-nba.p.rapidapi.com/games?page=${meta?.current_page}&per_page=10`;
-  const OPTIONS = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
-    }
-  };
 
   const getScores = () => {
+    const URL = `https://free-nba.p.rapidapi.com/games?page=${meta?.current_page}&per_page=${perPage}`;
+    const OPTIONS = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
+      }
+    };
     fetch(URL, OPTIONS)
       .then(response => response.json())
       .then(obj => {
         setScores(obj.data);
         setMeta(obj.meta);
         setFetchSuccess(true);
-        console.info(obj);
         console.info('meta:', meta);
+        console.log('perPage: ', perPage);
       });
   };
 
@@ -63,7 +64,14 @@ function LatestScores() {
           </li>
         ))}
       </ul>
-      {meta && <TablePagination meta={meta} />}
+      {meta &&
+        <Pagination
+          meta={meta}
+          setPerPage={setPerPage}
+          perPage={perPage}
+          getScores={getScores}
+        />
+      }
     </div >
   )
 }
