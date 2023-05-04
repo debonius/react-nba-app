@@ -3,7 +3,7 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
-import Pagination from '../app/components/shared/Pagination'
+import TablePagination from '../app/components/shared/TablePagination'
 import Game from './api/types/games';
 import Meta from './api/types/meta';
 
@@ -25,7 +25,7 @@ function LatestScores() {
   const [scores, setScores] = useState<Games>([]);
   const [meta, setMeta] = useState<Meta>();
   const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
-  const URL = 'https://free-nba.p.rapidapi.com/games?page=693&per_page=10';
+  const URL = `https://free-nba.p.rapidapi.com/games?page=${meta?.current_page}&per_page=10`;
   const OPTIONS = {
     method: 'GET',
     headers: {
@@ -43,7 +43,7 @@ function LatestScores() {
         console.info(obj);
         console.info('meta:', meta);
       });
-  }
+  };
 
 
   useEffect(() => getScores(), []);
@@ -63,7 +63,7 @@ function LatestScores() {
           </li>
         ))}
       </ul>
-      {meta && <Pagination current_page={meta.current_page} />}
+      {meta && <TablePagination meta={meta} />}
     </div >
   )
 }
