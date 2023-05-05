@@ -1,5 +1,5 @@
 'use client';
-// import Image from 'next/image'
+import Image from 'next/image'
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
@@ -59,11 +59,27 @@ function LatestScores() {
       <h1>Latest scores</h1>
       <ul>
         {fetchSuccess && scores.map(score => (
-          <li key={score.id}>
+          <li key={score.id} className='latest-scores__row'>
+            <Image
+              src={'/img/teams/' + score.home_team.abbreviation + '.svg'}
+              alt={score.home_team.full_name + ' logo'}
+              width={32}
+              height={32}
+            />
             <div>
-              {score.home_team.abbreviation} {score.home_team_score} vs {score.visitor_team_score} {score.visitor_team.abbreviation}
+              {score.home_team.abbreviation} {score.home_team_score}
             </div>
-            <span>
+            <span className='latest-scores__vs'>VS</span>
+            <div>
+              <Image
+                src={'/img/teams/' + score.visitor_team.abbreviation + '.svg'}
+                alt={score.visitor_team.full_name + ' logo'}
+                width={32}
+                height={32}
+              />
+              {score.visitor_team_score} {score.visitor_team.abbreviation}
+            </div>
+            <span className='latest-scores__date'>
               {MONTHS[new Date(score.date).getMonth()]} {new Date(score.date).getDate()}, {new Date(score.date).getFullYear()}
             </span>
           </li>
