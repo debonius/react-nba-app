@@ -14,17 +14,17 @@ export default function Pagination({ meta, setPerPage, perPage, getScores, setCu
         console.log('currentPage: ', currentPage);
         console.log('table page: ', page);
         console.log('table newPage: ', newPage);
-        // getScores();
+        getScores();
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(parseInt(event.target.value, 100));
         // setPerPage(parseInt(event.target.value, 10));
         // setRowsPerPage(perPage);
         setPage(0);
-        // getScores();
+        getScores();
     };
 
     return (

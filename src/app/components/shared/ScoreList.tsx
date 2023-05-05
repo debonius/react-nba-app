@@ -12,7 +12,7 @@ export default function ScoreList() {
     type Games = Game[];
     const [scores, setScores] = useState<Games>([]);
     const [meta, setMeta] = useState<Meta>();
-    const [perPage, setPerPage] = useState<Number>(10);
+    const [perPage, setPerPage] = useState<Number>(100);
     const [currentPage, setCurrentPage] = useState<Number>(1);
     const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
 
