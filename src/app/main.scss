@@ -1,7 +1,6 @@
 // Colors
 $color-primary : #2361b7;
 $color-secondary : #c91e3a;
-$gray : #888;
 
 // Shared
 
@@ -22,10 +21,14 @@ nav {
     &__row {
         display: flex;
         gap: .5rem;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+        padding: 0.5rem;
         margin-bottom: 1rem;
-        border-bottom: 1px solid lightgray;
+        text-align: center;
+        border-radius: 0.5rem;
+        border: 1px solid lightgray;
     }
 
     &__vs {
@@ -39,9 +42,9 @@ nav {
     }
 
     &__date {
-        // padding-top: .2rem;
         flex-basis: 100%;
-        color: $gray;
+        font-size: 0.8rem;
+        color: lightslategray;
     }
 }
 

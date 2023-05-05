@@ -12,10 +12,14 @@ nav {
 .latest-scores__row {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid lightgray;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 1px solid lightgray;
 }
 .latest-scores__vs {
   margin: auto 1rem;
@@ -27,7 +31,8 @@ nav {
 }
 .latest-scores__date {
   flex-basis: 100%;
-  color: #888;
+  font-size: 0.8rem;
+  color: lightslategray;
 }
 
 /*# sourceMappingURL=main.css.map */
