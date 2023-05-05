@@ -46,6 +46,9 @@ nav a:hover span {
   border-radius: 0.5rem;
   border: 1px solid lightgray;
 }
+.latest-scores__row:hover {
+  background: ghostwhite;
+}
 .latest-scores__vs {
   margin: auto 1rem;
   color: #333;

@@ -52,6 +52,10 @@ nav {
         text-align: center;
         border-radius: 0.5rem;
         border: 1px solid lightgray;
+
+        &:hover {
+            background: ghostwhite;
+        }
     }
 
     &__vs {
