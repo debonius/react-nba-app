@@ -66,19 +66,17 @@ function LatestScores() {
               width={32}
               height={32}
             />
-            <div>
-              {score.home_team.abbreviation} {score.home_team_score}
-            </div>
+            <span>{score.home_team.abbreviation} </span>
+            <span className='latest-scores__score'>{score.home_team_score}</span>
             <span className='latest-scores__vs'>VS</span>
-            <div>
-              <Image
-                src={'/img/teams/' + score.visitor_team.abbreviation + '.svg'}
-                alt={score.visitor_team.full_name + ' logo'}
-                width={32}
-                height={32}
-              />
-              {score.visitor_team_score} {score.visitor_team.abbreviation}
-            </div>
+            <span className='latest-scores__score'>{score.visitor_team_score} </span>
+            <Image
+              src={'/img/teams/' + score.visitor_team.abbreviation + '.svg'}
+              alt={score.visitor_team.full_name + ' logo'}
+              width={32}
+              height={32}
+            />
+            <span>{score.visitor_team.abbreviation}</span>
             <span className='latest-scores__date'>
               {MONTHS[new Date(score.date).getMonth()]} {new Date(score.date).getDate()}, {new Date(score.date).getFullYear()}
             </span>
