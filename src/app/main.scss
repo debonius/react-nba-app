@@ -6,7 +6,30 @@ $color-secondary : #c91e3a;
 
 nav {
     position: fixed;
+    left: 0;
     bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 5rem;
+    padding: .5rem;
+    background: $color-primary;
+    text-align: center;
+
+    a,
+    a:active,
+    a:focus,
+    a:focus-visible,
+    a:hover {
+        color: white;
+        text-decoration: none;
+
+        span {
+            display: block;
+            font-size: 0.8rem;
+        }
+    }
 }
 
 // Home
