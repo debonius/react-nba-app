@@ -11,12 +11,22 @@ nav {
 
 .latest-scores__row {
   display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid lightgray;
 }
 .latest-scores__vs {
+  margin: auto 1rem;
   color: #333;
   font-weight: 600;
 }
+.latest-scores__score {
+  font-weight: 600;
+}
 .latest-scores__date {
+  flex-basis: 100%;
   color: #888;
 }
 

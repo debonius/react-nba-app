@@ -21,14 +21,26 @@ nav {
 .latest-scores {
     &__row {
         display: flex;
+        gap: .5rem;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid lightgray;
     }
 
     &__vs {
+        margin: auto 1rem;
         color: #333;
         font-weight: 600;
     }
 
+    &__score {
+        font-weight: 600;
+    }
+
     &__date {
+        // padding-top: .2rem;
+        flex-basis: 100%;
         color: $gray;
     }
 }
