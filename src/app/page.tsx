@@ -3,7 +3,7 @@
 // import styles from './page.module.css'
 import { useState, useEffect } from 'react';
 import Navigation from '../app/components/shared/Navigation'
-import Pagination from '../app/components/shared/TablePagination'
+import Pagination from './components/shared/Pagination'
 import Game from './api/types/games';
 import Meta from './api/types/meta';
 

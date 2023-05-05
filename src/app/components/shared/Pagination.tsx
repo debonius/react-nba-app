@@ -2,7 +2,7 @@ import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 
 export default function Pagination({ meta, setPerPage, perPage, getScores, setcurrentPage }) {
-    const [page, setPage] = React.useState(meta.total_pages);
+    const [page, setPage] = React.useState(2);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (
@@ -18,10 +18,11 @@ export default function Pagination({ meta, setPerPage, perPage, getScores, setcu
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        setPerPage(parseInt(event.target.value, 10));
-        setRowsPerPage(perPage);
-        getScores();
+        setRowsPerPage(parseInt(event.target.value, 10));
+        // setPerPage(parseInt(event.target.value, 10));
+        // setRowsPerPage(perPage);
         setPage(0);
+        getScores();
     };
 
     return (
