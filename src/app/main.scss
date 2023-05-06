@@ -32,14 +32,6 @@ nav {
     }
 }
 
-// Home
-
-.welcome-message {
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
 .latest-scores {
     &__row {
         display: flex;
@@ -47,10 +39,10 @@ nav {
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        padding: 0.5rem;
+        padding: .5rem;
         margin-bottom: 1rem;
         text-align: center;
-        border-radius: 0.5rem;
+        border-radius: 1rem;
         border: 1px solid lightgray;
 
         &:hover {

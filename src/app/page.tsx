@@ -7,7 +7,7 @@ function WelcomeMessage() {
   return (
     <>
       <h1>Welcome!</h1>
-      <p className='welcome-message'>Check latest NBA scores and stats, teams and players.
+      <p className={styles.welcomeMessage}>Check latest NBA scores and stats, teams and players.
       </p>
     </>
   )
