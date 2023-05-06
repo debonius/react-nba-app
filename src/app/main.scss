@@ -35,7 +35,7 @@ nav {
 .latest-scores {
     &__row {
         display: flex;
-        gap: .5rem;
+        column-gap: .5rem;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;

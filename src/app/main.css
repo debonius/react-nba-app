@@ -30,7 +30,7 @@ nav a:hover span {
 
 .latest-scores__row {
   display: flex;
-  gap: 0.5rem;
+  column-gap: 0.5rem;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
