@@ -1,6 +1,7 @@
 'use client';
 import Navigation from '../app/components/shared/Navigation'
 import ScoreList from '../app/components/shared/ScoreList'
+import styles from './page.module.css'
 
 function WelcomeMessage() {
   return (
