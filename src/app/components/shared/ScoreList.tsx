@@ -12,12 +12,13 @@ export default function ScoreList() {
     type Games = Game[];
     const [scores, setScores] = useState<Games>([]);
     const [meta, setMeta] = useState<Meta>();
-    const [perPage, setPerPage] = useState<Number>(100);
+    const [perPage, setPerPage] = useState<Number>(10);
+    const [totalPages, setTotalPages] = useState<Number>(100);
     const [currentPage, setCurrentPage] = useState<Number>(1);
     const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
 
     const getScores = () => {
-        const URL = `https://free-nba.p.rapidapi.com/games?page=${currentPage}&per_page=${perPage}`;
+        const URL = `https://free-nba.p.rapidapi.com/games?page=${totalPages}&per_page=${perPage}`;
         const OPTIONS = {
             method: 'GET',
             headers: {
@@ -27,11 +28,12 @@ export default function ScoreList() {
         fetch(URL, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                // setScores(obj.data.sort((a: Game, b: Game) => {
-                //   return new Date(b.date).getTime() - new Date(a.date).getTime();
-                // }));
+                setScores(obj.data.sort((a: Game, b: Game) => {
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                }));
                 setScores(obj.data);
                 setMeta(obj.meta);
+                setTotalPages(obj.meta.total_pages);
                 setFetchSuccess(true);
                 // console.warn('meta: ', meta);
                 // console.warn('perPage: ', perPage);
@@ -78,6 +80,7 @@ export default function ScoreList() {
                     getScores={getScores}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
+                    totalPages={totalPages}
                 />
             }
         </div >
