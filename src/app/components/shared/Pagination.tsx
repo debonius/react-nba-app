@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 
-export default function Pagination({ meta, fetchScores }) {
+export default function Pagination({ totalResults, fetchScores }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -23,7 +23,7 @@ export default function Pagination({ meta, fetchScores }) {
     return (
         <TablePagination
             component="div"
-            count={meta.total_count}
+            count={totalResults}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}

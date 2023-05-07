@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react';
 import Pagination from './Pagination'
 import Game from '../../api/types/games';
-import Meta from '../../api/types/meta';
+// import Meta from '../../api/types/meta';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -17,30 +17,37 @@ const OPTIONS = {
 
 export default function ScoreList() {
     type Games = Game[];
-    const [meta, setMeta] = useState<Meta>();
+    const [totalResults, setTotalResults] = useState<number>();
+    const [totalPages, setTotalPages] = useState<number>();
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [perPage, setPerPage] = useState<number>(10);
     const [scores, setScores] = useState<Games>([]);
-    const [receivedScore, setReceivedScore] = useState<Boolean>(false);
+    const [receivedScore, setReceivedScore] = useState<boolean>(false);
+    const URL = `https://free-nba.p.rapidapi.com/games?page=${currentPage}&per_page=${perPage}`;
 
-    function fetchScores() {
-        fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
+    async function fetchScoresMeta() {
+        await fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                setMeta(obj.meta);
-                console.warn('meta: ', obj.meta);
-                console.warn('meta: ', meta);
-            })
-            .finally(() => {
-                console.log(meta?.total_pages);
-                console.log(meta?.per_page);
-                const URL = `https://free-nba.p.rapidapi.com/games?page=${meta?.total_pages}&per_page=${25}`;
-                fetch(URL, OPTIONS)
-                    .then(response => response.json())
-                    .then(obj => {
-                        setScores(obj.data.sort((a: Game, b: Game) => {
-                            return new Date(b.date).getTime() - new Date(a.date).getTime();
-                        }));
-                        setReceivedScore(true);
-                    });
+                setTotalResults(obj.meta.total_count);
+                setTotalPages(obj.meta.total_pages);
+                setCurrentPage(obj.meta.total_pages);
+                setPerPage(obj.meta.per_page);
+                console.info('totalResults: ', totalResults);
+                console.info('totalPages: ', totalPages);
+                console.info('currentPage: ', currentPage);
+                console.info('perPage: ', perPage);
+            });
+    }
+    function fetchScores() {
+        fetchScoresMeta();
+        fetch(URL, OPTIONS)
+            .then(response => response.json())
+            .then(obj => {
+                setScores(obj.data.sort((a: Game, b: Game) => {
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                }));
+                setReceivedScore(true);
             });
     }
 
@@ -76,9 +83,9 @@ export default function ScoreList() {
                     </li>
                 ))}
             </ul>
-            {meta &&
+            {totalResults && totalResults > 0 &&
                 <Pagination
-                    meta={meta}
+                    totalResults={totalResults}
                     fetchScores={fetchScores}
                 />
             }
