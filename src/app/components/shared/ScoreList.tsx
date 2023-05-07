@@ -13,7 +13,8 @@ export default function ScoreList() {
     const [scores, setScores] = useState<Games>([]);
     const [meta, setMeta] = useState<Meta>();
     const [perPage, setPerPage] = useState<Number>(10);
-    const [totalPages, setTotalPages] = useState<Number>(100);
+    const [totalPages, setTotalPages] = useState<Number>(0);
+    const [totalCount, setTotalCount] = useState<Number>(0);
     const [currentPage, setCurrentPage] = useState<Number>(1);
     const [fetchSuccess, setFetchSuccess] = useState<Boolean>(false);
 
@@ -25,20 +26,29 @@ export default function ScoreList() {
                 'X-RapidAPI-Key': 'e97c778be5msh166dd90d82df4dep1025b4jsnd4d0e762bcc5',
             }
         };
-        fetch(URL, OPTIONS)
+        fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                setScores(obj.data.sort((a: Game, b: Game) => {
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
-                }));
-                setScores(obj.data);
                 setMeta(obj.meta);
+                console.warn('meta: ', meta);
+                setPerPage(obj.meta.per_page);
                 setTotalPages(obj.meta.total_pages);
-                setFetchSuccess(true);
-                // console.warn('meta: ', meta);
-                // console.warn('perPage: ', perPage);
-                // console.warn('currentPage: ', currentPage);
+                setTotalCount(obj.meta.total_count);
+
+                fetch(URL, OPTIONS)
+                    .then(response => response.json())
+                    .then(obj => {
+                        // setScores(obj.data.sort((a: Game, b: Game) => {
+                        //     return new Date(b.date).getTime() - new Date(a.date).getTime();
+                        // }));
+                        setScores(obj.data);
+                        setFetchSuccess(true);
+                        console.info('nba perPage: ', perPage);
+                        console.info('nba currentPage: ', currentPage);
+                    });
             });
+
+
     };
 
 

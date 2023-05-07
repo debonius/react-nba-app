@@ -11,26 +11,25 @@ export default function Pagination({ meta, setPerPage, perPage, getScores, setCu
     ) => {
         setPage(newPage);
         setCurrentPage(newPage)
-        console.log('currentPage: ', currentPage);
-        console.log('table page: ', page);
-        console.log('table newPage: ', newPage);
+        console.log('nba currentPage: ', currentPage);
+        console.log('mui page: ', page);
+        console.log('mui newPage: ', newPage);
         getScores();
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
-        setRowsPerPage(parseInt(event.target.value, 100));
-        // setPerPage(parseInt(event.target.value, 10));
-        // setRowsPerPage(perPage);
-        setPage(0);
-        getScores();
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPerPage(rowsPerPage);
+        // setPage(totalPages);
+        getScores(perPage);
     };
 
     return (
         <TablePagination
             component="div"
-            count={meta.total_pages}
+            count={meta.total_count}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
