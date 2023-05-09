@@ -1,5 +1,5 @@
 import Navigation from '../components/shared/Navigation';
-import ScoreList from '../../app/components/shared/ScoreList'
+import ScoreList from '../components/shared/ScoreList';
 
 export default function Scores() {
     return (

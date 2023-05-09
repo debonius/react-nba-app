@@ -1,4 +1,4 @@
-export default interface Team {
+export default interface team {
     id: number;
     abbreviation: string;
     city: string;

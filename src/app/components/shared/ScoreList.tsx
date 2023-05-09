@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image'
 import { useState, useEffect } from 'react';
-import Pagination from './Pagination'
-import Game from '../../api/types/games';
-// import Meta from '../../api/types/meta';
+// import TablePaginationScores from './TablePagination';
+import BasicPagination from './Pagination';
+import game from '../../api/types/games';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -16,39 +16,44 @@ const OPTIONS = {
 };
 
 export default function ScoreList() {
-    type Games = Game[];
-    const [totalResults, setTotalResults] = useState<number>();
-    const [totalPages, setTotalPages] = useState<number>();
-    const [currentPage, setCurrentPage] = useState<number>(0);
-    const [perPage, setPerPage] = useState<number>(10);
-    const [scores, setScores] = useState<Games>([]);
+    type games = game[];
+    const [page, setPage] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+    const [count, setCount] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [scores, setScores] = useState<games>([]);
     const [receivedScore, setReceivedScore] = useState<boolean>(false);
-    const URL = `https://free-nba.p.rapidapi.com/games?page=${currentPage}&per_page=${perPage}`;
 
-    async function fetchScoresMeta() {
-        await fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
+    function fetchScoresMeta() {
+        console.warn('called fetchScoresMeta()');
+        fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                setTotalResults(obj.meta.total_count);
+                setCount(obj.meta.total_count);
                 setTotalPages(obj.meta.total_pages);
-                setCurrentPage(obj.meta.total_pages);
-                setPerPage(obj.meta.per_page);
-                console.info('totalResults: ', totalResults);
+                console.info('count: ', count);
                 console.info('totalPages: ', totalPages);
-                console.info('currentPage: ', currentPage);
-                console.info('perPage: ', perPage);
+                console.info('page: ', page);
+                console.info('rowsPerPage: ', rowsPerPage);
             });
     }
-    function fetchScores() {
-        fetchScoresMeta();
-        fetch(URL, OPTIONS)
+
+    function fetchScoresList() {
+        console.warn('called fetchScoresList()');
+        fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${rowsPerPage}`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                setScores(obj.data.sort((a: Game, b: Game) => {
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
-                }));
+                // setScores(obj.data.sort((a: game, b: game) => {
+                //     return new Date(b.date).getTime() - new Date(a.date).getTime();
+                // }));
+                setScores(obj.data);
                 setReceivedScore(true);
             });
+    }
+
+    function fetchScores() {
+        fetchScoresMeta();
+        fetchScoresList()
     }
 
     useEffect(() => {
@@ -83,12 +88,16 @@ export default function ScoreList() {
                     </li>
                 ))}
             </ul>
-            {totalResults && totalResults > 0 &&
-                <Pagination
-                    totalResults={totalResults}
-                    fetchScores={fetchScores}
+            <BasicPagination />
+            {/* {count > 0 &&
+                <TablePaginationScores
+                    count={count}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    setPage={setPage}
+                    setRowsPerPage={setRowsPerPage}
                 />
-            }
+            } */}
         </div >
     )
 }
