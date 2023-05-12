@@ -1,14 +1,23 @@
-import * as React from 'react';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-
-export default function BasicPagination() {
+export default function Pagination(rowsPerPage, setRowsPerPage) {
     return (
-        <Stack spacing={2}>
-            <Pagination count={10} />
-            <Pagination count={10} color="primary" />
-            <Pagination count={10} color="secondary" />
-            <Pagination count={10} disabled />
-        </Stack>
+        <>
+            <label>
+                Rows per page:
+                <select
+                    value={rowsPerPage}
+                    onChange={
+                        e => {
+                            console.log('onChange()');
+                            // TO FIX
+                            // setRowsPerPage(e.target.value);
+                        }
+                    }
+                >
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+            </label>
+        </>
     );
 }

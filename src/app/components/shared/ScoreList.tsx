@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image'
 import { useState, useEffect } from 'react';
-// import TablePaginationScores from './TablePagination';
-import BasicPagination from './Pagination';
+import TablePaginationScores from './TablePagination';
+// import BasicPagination from './Pagination';
 import game from '../../api/types/games';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
@@ -88,8 +88,7 @@ export default function ScoreList() {
                     </li>
                 ))}
             </ul>
-            <BasicPagination />
-            {/* {count > 0 &&
+            {count > 0 &&
                 <TablePaginationScores
                     count={count}
                     page={page}
@@ -97,7 +96,7 @@ export default function ScoreList() {
                     setPage={setPage}
                     setRowsPerPage={setRowsPerPage}
                 />
-            } */}
+            }
         </div >
     )
 }

@@ -10,12 +10,16 @@ export default function TablePaginationScores({ page, setPage, rowsPerPage, setR
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+    // const handleChangeRowsPerPage = (
+    //     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    // ) => {
+    //     setRowsPerPage(parseInt(event.target.value, 10));
+    //     console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
+    // };
+    const handleChangeRowsPerPage = e => {
+        setRowsPerPage(e.target.value);
         console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
-    };
+    }
 
     return (
         <TablePagination
