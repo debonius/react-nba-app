@@ -1,4 +1,20 @@
-export default function Pagination(rowsPerPage, setRowsPerPage) {
+'use client';
+import { useState } from 'react';
+
+function Option({ onUpdate }) {
+    const [value, setState] = useState();
+    const handleChange = e => {
+        setState(e.target.value);
+        onUpdate(e.target.value);
+    };
+    return (
+        <option value="10">10</option>
+    )
+
+}
+
+export default function Pagination() {
+    const [rowsPerPage, setRowsPerPage] = useState("10");
     return (
         <>
             <label>
@@ -7,13 +23,14 @@ export default function Pagination(rowsPerPage, setRowsPerPage) {
                     value={rowsPerPage}
                     onChange={
                         e => {
-                            console.log('onChange()');
+                            console.log('called onChange()');
                             // TO FIX
-                            // setRowsPerPage(e.target.value);
+                            setRowsPerPage(e.target.value);
+                            console.log(rowsPerPage);
                         }
                     }
                 >
-                    <option value="10">10</option>
+                    <Option onUpdate={onUpdate} />
                     <option value="25">25</option>
                     <option value="50">50</option>
                 </select>
