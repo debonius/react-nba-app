@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react';
 import TablePaginationScores from './TablePagination';
-// import BasicPagination from './Pagination';
 import game from '../../api/types/games';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
@@ -40,6 +39,8 @@ export default function ScoreList() {
 
     function fetchScoresList() {
         console.warn('called fetchScoresList()');
+        console.warn('with pag: ', page);
+        console.warn('with rowsPerPage: ', rowsPerPage);
         fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${rowsPerPage}`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
@@ -62,6 +63,16 @@ export default function ScoreList() {
 
     return (
         <div className='latest-scores'>
+            {count > 0 &&
+                <TablePaginationScores
+                    count={count}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    setPage={setPage}
+                    setRowsPerPage={setRowsPerPage}
+                    fetchScoresList={fetchScoresList}
+                />
+            }
             <ul>
                 {receivedScore && scores.map(score => (
                     <li key={score.id} className='latest-scores__row'>
@@ -88,15 +99,6 @@ export default function ScoreList() {
                     </li>
                 ))}
             </ul>
-            {count > 0 &&
-                <TablePaginationScores
-                    count={count}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    setPage={setPage}
-                    setRowsPerPage={setRowsPerPage}
-                />
-            }
         </div >
     )
 }

@@ -6,7 +6,7 @@ export default function Scores() {
     return (
         <>
             <h1>All Scores</h1>
-            <Pagination />
+            {/* <Pagination /> */}
             <ScoreList />
             <Navigation />
         </>

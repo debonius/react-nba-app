@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 
-export default function TablePaginationScores({ page, setPage, rowsPerPage, setRowsPerPage, count }) {
+export default function TablePaginationScores({ page, setPage, rowsPerPage, setRowsPerPage, count, fetchScoresList }) {
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -17,7 +17,7 @@ export default function TablePaginationScores({ page, setPage, rowsPerPage, setR
     //     console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
     // };
     const handleChangeRowsPerPage = (e: any) => {
-        setRowsPerPage(e.target.value);
+        setRowsPerPage(e.target.value, fetchScoresList());
     }
 
     return (
