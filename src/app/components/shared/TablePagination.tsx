@@ -16,21 +16,23 @@ export default function TablePaginationScores({ page, setPage, rowsPerPage, setR
     //     setRowsPerPage(parseInt(event.target.value, 10));
     //     console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
     // };
-    const handleChangeRowsPerPage = e => {
+    const handleChangeRowsPerPage = (e: any) => {
         setRowsPerPage(e.target.value);
-        console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
     }
 
     return (
-        <TablePagination
-            component="div"
-            count={count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            showFirstButton={true}
-            showLastButton={true}
-        />
+        <>
+            <TablePagination
+                component="div"
+                count={count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                showFirstButton={true}
+                showLastButton={true}
+            />
+            <p>{rowsPerPage}</p>
+        </>
     );
 }
