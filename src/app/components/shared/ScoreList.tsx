@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image'
 import { useState, useEffect } from 'react';
-import TablePaginationScores from './TablePagination';
+import * as React from 'react';
+import TablePagination from '@mui/material/TablePagination';
 import game from '../../api/types/games';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
@@ -14,11 +15,54 @@ const OPTIONS = {
     }
 };
 
+function Pagination({ meta, rowsPerPage, setRowsPerPage, fetchScoresList }) {
+    const [page, setPage] = useState<number>(2);
+
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        // setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(event.target.value);
+        setPage(0);
+        fetchScoresList(event.target.value);
+        console.log('1) event.target.value: ', event.target.value);
+        console.log('2) rowsPerPage: ', rowsPerPage);
+        // console.log('3) perPage: ', perPage);
+    };
+
+    // function handleChangeRowsPerPage(event) {
+    //     setRowsPerPage(event.target.value);
+    //     setPage(0);
+    //     fetchScoresList(event.target.value);
+    //     console.log('1) event.target.value: ', event.target.value);
+    //     console.log('2) rowsPerPage: ', rowsPerPage);
+    // };
+
+    return (
+        <TablePagination
+            component="div"
+            count={meta?.total_count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+    );
+}
+
 export default function ScoreList() {
     type games = game[];
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
     const [count, setCount] = useState<number>(0);
+    const [meta, setMeta] = useState<object>({});
     const [totalPages, setTotalPages] = useState<number>(0);
     const [scores, setScores] = useState<games>([]);
     const [receivedScore, setReceivedScore] = useState<boolean>(false);
@@ -28,6 +72,7 @@ export default function ScoreList() {
         fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
+                setMeta(obj.meta);
                 setCount(obj.meta.total_count);
                 setTotalPages(obj.meta.total_pages);
                 console.info('count: ', count);
@@ -37,7 +82,7 @@ export default function ScoreList() {
             });
     }
 
-    function fetchScoresList() {
+    function fetchScoresList(newRowsPerPage: number) {
         console.warn('called fetchScoresList()');
         console.warn('with pag: ', page);
         console.warn('with rowsPerPage: ', rowsPerPage);
@@ -54,7 +99,7 @@ export default function ScoreList() {
 
     function fetchScores() {
         fetchScoresMeta();
-        fetchScoresList()
+        fetchScoresList(rowsPerPage);
     }
 
     useEffect(() => {
@@ -64,11 +109,9 @@ export default function ScoreList() {
     return (
         <div className='latest-scores'>
             {count > 0 &&
-                <TablePaginationScores
-                    count={count}
-                    page={page}
+                <Pagination
+                    meta={meta}
                     rowsPerPage={rowsPerPage}
-                    setPage={setPage}
                     setRowsPerPage={setRowsPerPage}
                     fetchScoresList={fetchScoresList}
                 />
