@@ -8,6 +8,7 @@ export default function TablePaginationScores({ page, setPage, rowsPerPage, setR
         newPage: number,
     ) => {
         setPage(newPage);
+        // fetchScoresList();
     };
 
     // const handleChangeRowsPerPage = (
@@ -17,7 +18,15 @@ export default function TablePaginationScores({ page, setPage, rowsPerPage, setR
     //     console.info('called handleChangeRowsPerPage(), new value: ' + rowsPerPage);
     // };
     const handleChangeRowsPerPage = (e: any) => {
-        setRowsPerPage(e.target.value, fetchScoresList());
+        // setRowsPerPage(e.target.value, fetchScoresList());
+
+        setTimeout(() => {
+            console.log('e.target.value: ', e.target.value);
+            setRowsPerPage(e.target.value);
+            console.log('rowsPerPage: ', rowsPerPage);
+
+        }, 500);
+
     }
 
     return (
