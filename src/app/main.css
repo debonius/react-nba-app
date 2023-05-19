@@ -28,6 +28,20 @@ nav a:hover span {
   font-size: 0.8rem;
 }
 
+.latest-scores .pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.latest-scores .pagination .buttons button {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.latest-scores .pagination__btn-change-page {
+  cursor: pointer;
+}
 .latest-scores__row {
   display: flex;
   column-gap: 0.5rem;

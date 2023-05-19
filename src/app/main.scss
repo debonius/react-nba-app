@@ -33,6 +33,25 @@ nav {
 }
 
 .latest-scores {
+    .pagination {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        .buttons {
+            button {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+
+        &__btn-change-page {
+            cursor: pointer;
+        }
+    }
+
     &__row {
         display: flex;
         column-gap: .5rem;

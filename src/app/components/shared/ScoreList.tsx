@@ -1,9 +1,13 @@
 'use client';
-import Image from 'next/image'
 import { useState, useEffect } from 'react';
-import * as React from 'react';
-import TablePagination from '@mui/material/TablePagination';
+import Image from 'next/image'
 import game from '../../api/types/games';
+import pageOptions from '../../api/types/pageOptions';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -15,107 +19,95 @@ const OPTIONS = {
     }
 };
 
-function Pagination({ meta, rowsPerPage, setRowsPerPage, fetchScoresList }) {
-    const [page, setPage] = useState<number>(2);
-
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
-    ) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        // setRowsPerPage(parseInt(event.target.value, 10));
-        setRowsPerPage(event.target.value);
-        setPage(0);
-        fetchScoresList(event.target.value);
-        console.log('1) event.target.value: ', event.target.value);
-        console.log('2) rowsPerPage: ', rowsPerPage);
-        // console.log('3) perPage: ', perPage);
-    };
-
-    // function handleChangeRowsPerPage(event) {
-    //     setRowsPerPage(event.target.value);
-    //     setPage(0);
-    //     fetchScoresList(event.target.value);
-    //     console.log('1) event.target.value: ', event.target.value);
-    //     console.log('2) rowsPerPage: ', rowsPerPage);
-    // };
-
-    return (
-        <TablePagination
-            component="div"
-            count={meta?.total_count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-    );
-}
-
 export default function ScoreList() {
     type games = game[];
-    const [page, setPage] = useState<number>(0);
-    const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-    const [count, setCount] = useState<number>(0);
-    const [meta, setMeta] = useState<object>({});
-    const [totalPages, setTotalPages] = useState<number>(0);
     const [scores, setScores] = useState<games>([]);
     const [receivedScore, setReceivedScore] = useState<boolean>(false);
 
-    function fetchScoresMeta() {
-        console.warn('called fetchScoresMeta()');
-        fetch(`https://free-nba.p.rapidapi.com/games`, OPTIONS)
-            .then(response => response.json())
-            .then(obj => {
-                setMeta(obj.meta);
-                setCount(obj.meta.total_count);
-                setTotalPages(obj.meta.total_pages);
-                console.info('count: ', count);
-                console.info('totalPages: ', totalPages);
-                console.info('page: ', page);
-                console.info('rowsPerPage: ', rowsPerPage);
-            });
+    const [pageOptions, setPageOptions] = useState<pageOptions>({
+        page_size: 10,
+        page: 1,
+        tot_pages: null
+    })
+
+    function subtractTen() {
+        setPageOptions({
+            ...pageOptions,
+            page_size: pageOptions.page_size - 10,
+        });
+        fetchScores(pageOptions.page_size, pageOptions.page)
+        console.log(pageOptions.page_size);
     }
 
-    function fetchScoresList(newRowsPerPage: number) {
+    function addTen() {
+        setPageOptions({
+            ...pageOptions,
+            page_size: pageOptions.page_size + 10,
+        });
+        fetchScores(pageOptions.page_size, pageOptions.page);
+        console.log('page_size', pageOptions.page_size);
+    }
+
+    const handleGoToPrevPage = () => {
+        setPageOptions({
+            ...pageOptions,
+            page: pageOptions.page - 1,
+        });
+        fetchScores(pageOptions.page_size, pageOptions.page);
+        console.log('page', pageOptions.page);
+    }
+
+    const handleGoToNextPage = () => {
+        setPageOptions({
+            ...pageOptions,
+            page: pageOptions.page + 1,
+        });
+        fetchScores(pageOptions.page_size, pageOptions.page);
+        console.log('page', pageOptions.page);
+    }
+
+    function fetchScores(pageSize: number, page: number) {
         console.warn('called fetchScoresList()');
-        console.warn('with pag: ', page);
-        console.warn('with rowsPerPage: ', rowsPerPage);
-        fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${rowsPerPage}`, OPTIONS)
+        console.warn('with page: ', page);
+        console.warn('with pageSize: ', pageSize);
+        fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${pageSize}`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                // setScores(obj.data.sort((a: game, b: game) => {
-                //     return new Date(b.date).getTime() - new Date(a.date).getTime();
-                // }));
+                // setScores(obj.data);
+                setScores(obj.data.sort((a: game, b: game) => {
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                }));
                 setScores(obj.data);
+            }).finally(() => {
                 setReceivedScore(true);
             });
     }
 
-    function fetchScores() {
-        fetchScoresMeta();
-        fetchScoresList(rowsPerPage);
-    }
-
     useEffect(() => {
-        fetchScores();
-    }, []);
+        fetchScores(pageOptions.page_size, pageOptions.page);
+    }, [pageOptions]);
 
     return (
         <div className='latest-scores'>
-            {count > 0 &&
-                <Pagination
-                    meta={meta}
-                    rowsPerPage={rowsPerPage}
-                    setRowsPerPage={setRowsPerPage}
-                    fetchScoresList={fetchScoresList}
-                />
-            }
+            <div className='pagination'>
+                <p>Rows per page: {pageOptions.page_size}</p>
+                <ButtonGroup
+                    aria-label="outlined button group"
+                    variant="outlined"
+                    className='buttons'
+                >
+                    {pageOptions.page_size > 10 && <Button onClick={subtractTen}>-10</Button>}
+                    <Button onClick={addTen}>+10</Button>
+                </ButtonGroup>
+                {pageOptions.page > 1 &&
+                    <ArrowBackIosIcon
+                        onClick={handleGoToPrevPage}
+                        color='primary'
+                        className='pagination__btn-change-page'
+                    />}
+                <span>Page: {pageOptions.page > 0 && pageOptions.page}</span>
+                <ArrowForwardIosIcon className='pagination__btn-change-page' onClick={handleGoToNextPage} color='primary' />
+            </div>
             <ul>
                 {receivedScore && scores.map(score => (
                     <li key={score.id} className='latest-scores__row'>
