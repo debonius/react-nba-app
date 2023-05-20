@@ -11,7 +11,7 @@ type players = player[];
 
 export default function Scores() {
 
-    const [page, setPage] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
     const [playersList, setPlayersList] = useState<players>();
     const [changedPage, setChangedPage] = useState<boolean>(false);
 
