@@ -29,7 +29,7 @@ export default function ScoreList() {
 
     const [pageOptions, setPageOptions] = useState<pageOptions>({
         page_size: 10,
-        page: 1,
+        page: lastPage,
         tot_pages: null
     })
 
@@ -51,16 +51,16 @@ export default function ScoreList() {
         console.log('page_size', pageOptions.page_size);
     }
 
-    const handleGoToPrevPage = () => {
+    const handleGoToFirstPage = () => {
         setPageOptions({
             ...pageOptions,
-            page: pageOptions.page - 1,
+            page: lastPage,
         });
         fetchScores(pageOptions.page_size, pageOptions.page);
         console.log('page', pageOptions.page);
     }
 
-    const handleGoToNextPage = () => {
+    const handleGoToPrevPage = () => {
         setPageOptions({
             ...pageOptions,
             page: pageOptions.page + 1,
@@ -69,10 +69,10 @@ export default function ScoreList() {
         console.log('page', pageOptions.page);
     }
 
-    const handleGoToFirstPage = () => {
+    const handleGoToNextPage = () => {
         setPageOptions({
             ...pageOptions,
-            page: 1,
+            page: pageOptions.page - 1,
         });
         fetchScores(pageOptions.page_size, pageOptions.page);
         console.log('page', pageOptions.page);
@@ -81,7 +81,7 @@ export default function ScoreList() {
     const handleGoToLastPage = () => {
         setPageOptions({
             ...pageOptions,
-            page: lastPage,
+            page: 1,
         });
         fetchScores(pageOptions.page_size, pageOptions.page);
         console.log('page', pageOptions.page);
@@ -122,7 +122,7 @@ export default function ScoreList() {
                     <Button onClick={addTen}>+10</Button>
                 </ButtonGroup>
                 <div>
-                    {pageOptions.page > 1 &&
+                    {pageOptions.page <= lastPage &&
                         <>
                             <FirstPageIcon
                                 onClick={handleGoToFirstPage}
@@ -135,7 +135,7 @@ export default function ScoreList() {
                             />
                         </>
                     }
-                    {pageOptions.page > 0 &&
+                    {pageOptions.page >= 1 &&
                         <>
                             <span>Page {pageOptions.page}</span>
                             <ArrowForwardIosIcon
