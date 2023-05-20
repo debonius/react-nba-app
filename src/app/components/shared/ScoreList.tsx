@@ -4,8 +4,6 @@ import Image from 'next/image'
 import game from '../../api/types/games';
 import pageOptions from '../../api/types/pageOptions';
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
@@ -32,24 +30,6 @@ export default function ScoreList() {
         page: lastPage,
         tot_pages: null
     })
-
-    function subtractTen() {
-        setPageOptions({
-            ...pageOptions,
-            page_size: pageOptions.page_size - 10,
-        });
-        fetchScores(pageOptions.page_size, pageOptions.page)
-        console.log(pageOptions.page_size);
-    }
-
-    function addTen() {
-        setPageOptions({
-            ...pageOptions,
-            page_size: pageOptions.page_size + 10,
-        });
-        fetchScores(pageOptions.page_size, pageOptions.page);
-        console.log('page_size', pageOptions.page_size);
-    }
 
     const handleGoToFirstPage = () => {
         setPageOptions({
@@ -112,15 +92,6 @@ export default function ScoreList() {
     return (
         <div className='latest-scores'>
             <div className='pagination'>
-                <p>Show: {pageOptions.page_size}</p>
-                <ButtonGroup
-                    aria-label="outlined button group"
-                    variant="outlined"
-                    className='buttons'
-                >
-                    {pageOptions.page_size > 10 && <Button onClick={subtractTen}>-10</Button>}
-                    <Button onClick={addTen}>+10</Button>
-                </ButtonGroup>
                 <div>
                     {pageOptions.page <= lastPage &&
                         <>
