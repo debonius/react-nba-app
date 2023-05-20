@@ -6,33 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import player from '../api/types/player';
 import { useEffect } from 'react';
 
-type players = player[];
-
-function createData(
-    name: string,
-    position: string,
-    team: string,
-    division: string,
-) {
-    return { name, position, team, division };
-}
-
-// const rows = [
-//     createData('Frozen yoghurt', 159, 6.0, 4.0),
-//     createData('Ice cream sandwich', 237, 9.0, 4.3),
-//     createData('Eclair', 262, 16.0, 6.0),
-//     createData('Cupcake', 305, 3.7, 4.3),
-//     createData('Gingerbread', 356, 16.0, 3.9),
-// ];
-
-export default function PlayersList(players: players) {
+export default function PlayersList({ playersList }) {
 
     useEffect(() => {
-        console.log('players: ', players);
-    }, []);
+    }, [playersList]);
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -45,7 +25,7 @@ export default function PlayersList(players: players) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {players.map(player => (
+                    {playersList.map(player => (
                         <TableRow
                             key={player.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

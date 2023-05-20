@@ -5,12 +5,14 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayersList from './Players';
 import player from '../api/types/player';
+// import players from '../api/types/player';
 
 type players = player[];
 
 export default function Scores() {
+
     const [page, setPage] = useState<number>(0);
-    const [players, setPlayers] = useState<players>([]);
+    const [playersList, setPlayersList] = useState<players>();
     const [changedPage, setChangedPage] = useState<boolean>(false);
 
     const handleGoToPrevPage = () => {
@@ -31,6 +33,7 @@ export default function Scores() {
                     color='primary'
                     className='pagination__btn-change-page button'
                 />
+                <span>Page {page}</span>
                 <ArrowForwardIosIcon
                     className='pagination__btn-change-page button'
                     onClick={handleGoToNextPage}
@@ -53,8 +56,7 @@ export default function Scores() {
         try {
             const response = await fetch(url, options);
             const result = await response.json();
-            // console.log(result);
-            setPlayers(result.data);
+            setPlayersList(result.data);
         } catch (error) {
             console.error(error);
         }
@@ -68,7 +70,7 @@ export default function Scores() {
         <>
             <h1>NBA Players list</h1>
             <Pagination />
-            <PlayersList players={players} />
+            <PlayersList playersList={playersList} />
             <Navigation />
         </>
     )

@@ -8,3 +8,5 @@ export default interface player {
         full_name: string;
     }
 }
+
+export type players = player[];
