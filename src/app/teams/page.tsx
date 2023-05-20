@@ -36,7 +36,6 @@ export default function Teams() {
 
     return (
         <>
-            <h1>Teams works!</h1>
             <Heading />
         </>
     )
