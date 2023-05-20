@@ -3,16 +3,16 @@ import Navigation from '../components/shared/Navigation';
 import { useState, useEffect } from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import PlayersList from './Players';
+import PlayersList from './PlayersList';
 import player from '../api/types/player';
 // import players from '../api/types/player';
 
 type players = player[];
 
 export default function Scores() {
-
     const [page, setPage] = useState<number>(1);
     const [playersList, setPlayersList] = useState<players>();
+    const [tot_pages, setTot_pages] = useState<number | null>(null);
     const [changedPage, setChangedPage] = useState<boolean>(false);
 
     const handleGoToPrevPage = () => {
@@ -33,7 +33,7 @@ export default function Scores() {
                     color='primary'
                     className='pagination__btn-change-page button'
                 />
-                <span>Page {page}</span>
+                <span>Page {page} {tot_pages && `of${tot_pages}`}</span>
                 <ArrowForwardIosIcon
                     className='pagination__btn-change-page button'
                     onClick={handleGoToNextPage}
@@ -57,6 +57,7 @@ export default function Scores() {
             const response = await fetch(url, options);
             const result = await response.json();
             setPlayersList(result.data);
+            setTot_pages(result.meta.total_pages);
         } catch (error) {
             console.error(error);
         }
@@ -68,7 +69,7 @@ export default function Scores() {
 
     return (
         <>
-            <h1>NBA Players list</h1>
+            <h1>All NBA Players list</h1>
             <Pagination />
             <PlayersList playersList={playersList} />
             <Navigation />
