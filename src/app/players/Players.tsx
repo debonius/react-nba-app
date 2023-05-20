@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 
 export default function PlayersList({ playersList }) {
+    const headers = ['Name', 'Position', 'Team', 'Division'];
 
     useEffect(() => {
     }, [playersList]);
@@ -18,10 +19,10 @@ export default function PlayersList({ playersList }) {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Position</TableCell>
-                        <TableCell align="right">Team</TableCell>
-                        <TableCell align="right">Division</TableCell>
+                        {headers.map(header => (
+                            <TableCell>{header}</TableCell>
+                        ))}
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
