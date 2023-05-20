@@ -67,17 +67,15 @@ export default function ScoreList() {
     }
 
     function fetchScores(pageSize: number, page: number) {
-        console.warn('called fetchScoresList()');
-        console.warn('with page: ', page);
-        console.warn('with pageSize: ', pageSize);
+        console.log('called fetchScoresList()');
+        console.log('with page: ', page);
+        console.log('with pageSize: ', pageSize);
         fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${pageSize}`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                // setScores(obj.data);
                 setScores(obj.data.sort((a: game, b: game) => {
                     return new Date(b.date).getTime() - new Date(a.date).getTime();
                 }));
-                setScores(obj.data);
             }).finally(() => {
                 setReceivedScore(true);
             });
@@ -90,7 +88,7 @@ export default function ScoreList() {
     return (
         <div className='latest-scores'>
             <div className='pagination'>
-                <p>Rows per page: {pageOptions.page_size}</p>
+                <p>Show: {pageOptions.page_size}</p>
                 <ButtonGroup
                     aria-label="outlined button group"
                     variant="outlined"
