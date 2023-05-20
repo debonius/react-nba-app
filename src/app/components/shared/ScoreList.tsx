@@ -74,10 +74,9 @@ export default function ScoreList() {
         fetch(`https://free-nba.p.rapidapi.com/games?page=${page}&per_page=${pageSize}`, OPTIONS)
             .then(response => response.json())
             .then(obj => {
-                setScores(obj.data);
-                // setScores(obj.data.sort((a: game, b: game) => {
-                //     return new Date(b.date).getTime() - new Date(a.date).getTime();
-                // }));
+                setScores(obj.data.sort((a: game, b: game) => {
+                    return new Date(b.date).getTime() - new Date(a.date).getTime();
+                }));
                 console.log('meta.total_pages: ', obj.meta.total_pages);
                 setLastPage(obj.meta.total_pages);
             }).finally(() => {
@@ -90,7 +89,7 @@ export default function ScoreList() {
     }, [pageOptions]);
 
     return (
-        <div className='latest-scores'>
+        <div className='list'>
             <div className='pagination'>
                 <div>
                     {pageOptions.page <= lastPage &&
@@ -124,7 +123,7 @@ export default function ScoreList() {
             </div>
             <ul>
                 {receivedScore && scores.map(score => (
-                    <li key={score.id} className='latest-scores__row'>
+                    <li key={score.id} className='list__row'>
                         <Image
                             src={'/img/teams/' + score.home_team.abbreviation + '.svg'}
                             alt={score.home_team.full_name + ' logo'}
@@ -132,9 +131,9 @@ export default function ScoreList() {
                             height={32}
                         />
                         <span>{score.home_team.abbreviation} </span>
-                        <span className='latest-scores__score'>{score.home_team_score}</span>
-                        <span className='latest-scores__vs'>VS</span>
-                        <span className='latest-scores__score'>{score.visitor_team_score} </span>
+                        <span className='list__score'>{score.home_team_score}</span>
+                        <span className='list__vs'>VS</span>
+                        <span className='list__score'>{score.visitor_team_score} </span>
                         <Image
                             src={'/img/teams/' + score.visitor_team.abbreviation + '.svg'}
                             alt={score.visitor_team.full_name + ' logo'}
@@ -142,7 +141,7 @@ export default function ScoreList() {
                             height={32}
                         />
                         <span>{score.visitor_team.abbreviation}</span>
-                        <span className='latest-scores__date'>
+                        <span className='text--shadow'>
                             {MONTHS[new Date(score.date).getMonth()]} {new Date(score.date).getDate()}, {new Date(score.date).getFullYear()}
                         </span>
                     </li>

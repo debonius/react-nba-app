@@ -1,3 +1,12 @@
+.buttons button {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.button {
+  cursor: pointer;
+}
+
 nav {
   position: fixed;
   left: 0;
@@ -28,21 +37,23 @@ nav a:hover span {
   font-size: 0.8rem;
 }
 
-.latest-scores .pagination {
+.text--shadow {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: lightslategray;
+}
+
+.list .pagination {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
-.latest-scores .pagination .buttons button {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.latest-scores .pagination__btn-change-page {
+.list .pagination__btn-change-page {
   cursor: pointer;
 }
-.latest-scores__row {
+.list__row {
   display: flex;
   column-gap: 0.5rem;
   flex-wrap: wrap;
@@ -54,21 +65,22 @@ nav a:hover span {
   border-radius: 1rem;
   border: 1px solid lightgray;
 }
-.latest-scores__row:hover {
+.list__row:hover {
   background: ghostwhite;
 }
-.latest-scores__vs {
+.list__row.teams {
+  justify-content: flex-start;
+}
+.list__row.teams .team-name {
+  font-weight: bold;
+}
+.list__vs {
   margin: auto 1rem;
   color: #333;
   font-weight: 600;
 }
-.latest-scores__score {
+.list__score {
   font-weight: 600;
-}
-.latest-scores__date {
-  flex-basis: 100%;
-  font-size: 0.8rem;
-  color: lightslategray;
 }
 
 /*# sourceMappingURL=main.css.map */

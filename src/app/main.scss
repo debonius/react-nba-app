@@ -4,6 +4,17 @@ $color-secondary : #c91e3a;
 
 // Shared
 
+.buttons {
+    button {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.button {
+    cursor: pointer;
+}
+
 nav {
     position: fixed;
     left: 0;
@@ -32,20 +43,19 @@ nav {
     }
 }
 
-.latest-scores {
+.text--shadow {
+    flex-basis: 100%;
+    font-size: 0.8rem;
+    color: lightslategray;
+}
+
+.list {
     .pagination {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 1rem;
         margin-bottom: 1rem;
-
-        .buttons {
-            button {
-                padding-top: 0;
-                padding-bottom: 0;
-            }
-        }
 
         &__btn-change-page {
             cursor: pointer;
@@ -67,6 +77,14 @@ nav {
         &:hover {
             background: ghostwhite;
         }
+
+        &.teams {
+            justify-content: flex-start;
+
+            .team-name {
+                font-weight: bold;
+            }
+        }
     }
 
     &__vs {
@@ -77,12 +95,6 @@ nav {
 
     &__score {
         font-weight: 600;
-    }
-
-    &__date {
-        flex-basis: 100%;
-        font-size: 0.8rem;
-        color: lightslategray;
     }
 }
 
