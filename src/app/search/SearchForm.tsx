@@ -46,7 +46,11 @@ export default function SearchPlayerForm() {
             <>
                 <p>input value: {playerInput}</p>
                 <ul>
-                    <li>results here</li>
+                    {foundPlayers !== undefined &&
+                        foundPlayers.map(player => (
+                            <li key={player.id}>{player.first_name + ' ' + player.last_name}</li>
+                        ))
+                    }
                 </ul>
             </>
         )
