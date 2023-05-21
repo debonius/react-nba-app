@@ -5,7 +5,6 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayersList from './PlayersList';
 import player from '../api/types/player';
-// import players from '../api/types/player';
 
 type players = player[];
 

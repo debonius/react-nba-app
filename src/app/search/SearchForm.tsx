@@ -5,11 +5,38 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import BasicButton from '../components/shared/Button';
 import { players } from '../api/types/player';
+import PlayersList from '../players/PlayersList';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function SearchPlayerForm() {
+    const [page, setPage] = useState<number>(1);
+    const [tot_pages, setTot_pages] = useState<number | null>(null);
     const [playerInput, setPlayerInput] = useState<string>('');
     const [foundPlayers, setFoundPlayers] = useState<players>([]);
+    const [noResults, setNoResults] = useState<boolean>(false);
     let btnText: string = 'Search';
+
+    function Pagination() {
+        return (
+            <div className='pagination'>
+                {page > 1 &&
+                    <ArrowBackIosIcon
+                        onClick={handleGoToPrevPage}
+                        color='primary'
+                        className='pagination__btn-change-page button'
+                    />
+                }
+                <span>Page {page} {tot_pages && `of ${tot_pages}`}</span>
+                {page <= tot_pages &&
+                    <ArrowForwardIosIcon
+                        className='pagination__btn-change-page button'
+                        onClick={handleGoToNextPage}
+                        color='primary'
+                    />}
+            </div>
+        )
+    }
 
     function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>) {
         setPlayerInput(e.target.value);
@@ -17,7 +44,7 @@ export default function SearchPlayerForm() {
 
     async function handleSearchButton() {
         if (playerInput !== '' && playerInput.length > 0) {
-            const url = `https://free-nba.p.rapidapi.com/players?page=1&per_page=25&search=${playerInput}`;
+            const url = `https://free-nba.p.rapidapi.com/players?page=${page}&per_page=25&search=${playerInput}`;
             const options = {
                 method: 'GET',
                 headers: {
@@ -30,11 +57,13 @@ export default function SearchPlayerForm() {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 console.log('result: ', result);
+                setTot_pages(result.meta.total_pages);
                 setFoundPlayers(result.data.sort((prev, next) => {
                     const A = prev.last_name.toUpperCase();
                     const B = next.last_name.toUpperCase();
                     return A < B ? -1 : A > B ? +1 : 0;
                 }));
+                result.data.length === 0 ? setNoResults(true) : setNoResults(false);
             } catch (error) {
                 console.error(error);
             }
@@ -45,13 +74,12 @@ export default function SearchPlayerForm() {
         return (
             <>
                 <p>input value: {playerInput}</p>
-                <ul>
-                    {foundPlayers !== undefined &&
-                        foundPlayers.map(player => (
-                            <li key={player.id}>{player.first_name + ' ' + player.last_name}</li>
-                        ))
-                    }
-                </ul>
+                {!noResults && foundPlayers !== undefined &&
+                    <PlayersList playersList={foundPlayers} />
+                }
+                {noResults &&
+                    <p>No players found</p>
+                }
             </>
         )
     }
