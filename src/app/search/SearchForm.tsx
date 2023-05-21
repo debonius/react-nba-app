@@ -17,6 +17,7 @@ export default function SearchPlayerForm() {
     const [changedPage, setChangedPage] = useState<boolean>(false);
     const [playerInput, setPlayerInput] = useState<string>('');
     const [teamInput, setTeamInput] = useState<string>('');
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
     const [foundPlayers, setFoundPlayers] = useState<players>([]);
     const [foundTeams, setFoundTeams] = useState<team[]>([]);
     const [noResults, setNoResults] = useState<boolean>(false);
@@ -111,8 +112,6 @@ export default function SearchPlayerForm() {
     function FoundPlayersResults() {
         return (
             <>
-                <p>player value: {playerInput}</p>
-                <p>team value: {teamInput}</p>
                 {!noResults && foundPlayers !== undefined &&
                     <TeamsList teams={foundTeams} />
                 }
