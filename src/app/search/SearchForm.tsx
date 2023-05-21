@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import BasicButton from '../components/shared/Button';
 
 export default function SearchPlayerForm() {
-    btnText = 'Search';
+    let btnText: string = 'Search';
     return (
         <Box
             component="form"
