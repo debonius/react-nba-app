@@ -59,7 +59,15 @@ export default function Scores() {
         try {
             const response = await fetch(url, options);
             const result = await response.json();
-            setPlayersList(result.data);
+            setPlayersList(result.data.sort(
+                (prev, next) => {
+                    const A = prev.first_name.toUpperCase();
+                    const B = next.first_name.toUpperCase();
+                    if (A < B) return -1;
+                    if (A > B) return +1;
+                    return 0;
+                })
+            );
             setTot_pages(result.meta.total_pages);
         } catch (error) {
             console.error(error);
