@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -5,6 +6,11 @@ import BasicButton from '../components/shared/Button';
 
 export default function SearchPlayerForm() {
     let btnText: string = 'Search';
+
+    function handleSearchButton() {
+        alert('called function from parent :)')
+    }
+
     return (
         <Box
             component="form"
@@ -26,7 +32,10 @@ export default function SearchPlayerForm() {
                 type="search"
                 variant="standard"
             />
-            <BasicButton btnText={btnText} />
+            <BasicButton
+                btnText={btnText}
+                handleSearchButton={handleSearchButton}
+            />
         </Box>
     );
 }
