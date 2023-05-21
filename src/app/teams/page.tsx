@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Navigation from '../components/shared/Navigation';
 import team from '../api/types/teams';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import TeamsList from '../components/shared/TeamsList';
 
 const page = 1;
 
@@ -77,28 +77,7 @@ export default function Teams() {
                 handleGoToPrevPage={handleGoToPrevPage}
                 handleGoToNextPage={handleGoToNextPage}
             />
-            <div className='list'>
-                <ul>
-                    {teams && teams.map(team => (
-                        <li key={team.id} className='list__row teams'>
-                            <Image
-                                src={`/img/teams/${team.abbreviation}.svg`}
-                                alt={team.full_name + ' logo'}
-                                width={32}
-                                height={32}
-                                onError={({ currentTarget }) => {
-                                    currentTarget.onerror = null; // prevents looping
-                                    currentTarget.src = "/img/ball.svg";
-                                }}
-                            />
-                            <span className='team-name'>{team.full_name}</span>
-                            <span>({team.abbreviation})</span>
-                            <span>- {team.division}</span>
-                            <span className="text--shadow">{team.city}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div >
+            <TeamsList teams={teams} />
         </>
     )
 }
