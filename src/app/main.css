@@ -83,4 +83,9 @@ nav a:hover span {
   font-weight: 600;
 }
 
+.search {
+  display: flex;
+  flex-direction: column;
+}
+
 /*# sourceMappingURL=main.css.map */
