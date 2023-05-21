@@ -9,10 +9,15 @@ import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 
 export default function PlayersList({ playersList }) {
-    const headers = ['Name', 'Position', 'Team', 'Division'];
+    const headers = [
+        { id: 1, value: 'Name' },
+        { id: 2, value: 'Position' },
+        { id: 3, value: 'Team' },
+        { id: 4, value: 'Division' }
+    ];
 
-    useEffect(() => {
-    }, [playersList]);
+    // useEffect(() => {
+    // }, [playersList]);
 
     return (
         <TableContainer component={Paper}>
@@ -20,7 +25,7 @@ export default function PlayersList({ playersList }) {
                 <TableHead>
                     <TableRow>
                         {headers.map(header => (
-                            <TableCell>{header}</TableCell>
+                            <TableCell key={header.id}>{header.value}</TableCell>
                         ))}
 
                     </TableRow>

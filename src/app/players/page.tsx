@@ -28,17 +28,20 @@ export default function Scores() {
     function Pagination() {
         return (
             <div className='pagination'>
-                <ArrowBackIosIcon
-                    onClick={handleGoToPrevPage}
-                    color='primary'
-                    className='pagination__btn-change-page button'
-                />
-                <span>Page {page} {tot_pages && `of${tot_pages}`}</span>
-                <ArrowForwardIosIcon
-                    className='pagination__btn-change-page button'
-                    onClick={handleGoToNextPage}
-                    color='primary'
-                />
+                {page > 1 &&
+                    <ArrowBackIosIcon
+                        onClick={handleGoToPrevPage}
+                        color='primary'
+                        className='pagination__btn-change-page button'
+                    />
+                }
+                <span>Page {page} {tot_pages && `of ${tot_pages}`}</span>
+                {page <= tot_pages &&
+                    <ArrowForwardIosIcon
+                        className='pagination__btn-change-page button'
+                        onClick={handleGoToNextPage}
+                        color='primary'
+                    />}
             </div>
         )
     }
