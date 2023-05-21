@@ -21,13 +21,13 @@ export default function SearchPlayerForm() {
             autoComplete="off"
         >
             <TextField
-                id="standard-search-by-name"
+                id="search-name"
                 label="Search player"
                 type="search"
                 variant="standard"
             />
             <TextField
-                id="standard-search-by-team"
+                id="search-team"
                 label="Search team"
                 type="search"
                 variant="standard"
