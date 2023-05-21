@@ -4,10 +4,7 @@ import Image from 'next/image'
 import game from '../../api/types/games';
 import pageOptions from '../../api/types/pageOptions';
 import * as React from 'react';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import LastPageIcon from '@mui/icons-material/LastPage';
+import FullPagination from './FullPagination';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -19,7 +16,7 @@ const OPTIONS = {
     }
 };
 
-export default function ScoreList() {
+export default function ScoreList({ showPagination }) {
     type games = game[];
     const [scores, setScores] = useState<games>([]);
     const [receivedScore, setReceivedScore] = useState<boolean>(false);
@@ -90,37 +87,14 @@ export default function ScoreList() {
 
     return (
         <div className='list'>
-            <div className='pagination'>
-                <div>
-                    {pageOptions.page <= lastPage &&
-                        <>
-                            <FirstPageIcon
-                                onClick={handleGoToFirstPage}
-                                className='pagination__btn-change-page'
-                            />
-                            <ArrowBackIosIcon
-                                onClick={handleGoToPrevPage}
-                                color='primary'
-                                className='pagination__btn-change-page'
-                            />
-                        </>
-                    }
-                    {pageOptions.page >= 1 &&
-                        <>
-                            <span>Page {pageOptions.page}</span>
-                            <ArrowForwardIosIcon
-                                className='pagination__btn-change-page'
-                                onClick={handleGoToNextPage}
-                                color='primary'
-                            />
-                            <LastPageIcon
-                                onClick={handleGoToLastPage}
-                                className='pagination__btn-change-page'
-                            />
-                        </>
-                    }
-                </div>
-            </div>
+            {showPagination === true && <FullPagination
+                pageOptions={pageOptions}
+                lastPage={lastPage}
+                handleGoToFirstPage={handleGoToFirstPage}
+                handleGoToLastPage={handleGoToLastPage}
+                handleGoToPrevPage={handleGoToPrevPage}
+                handleGoToNextPage={handleGoToNextPage}
+            />}
             <ul>
                 {receivedScore && scores.map(score => (
                     <li key={score.id} className='list__row'>

@@ -15,11 +15,12 @@ function WelcomeMessage() {
 }
 
 export default function Home() {
+  const showPagination = false;
   return (
     <>
       <WelcomeMessage />
       <h1>Latest scores</h1>
-      <ScoreList />
+      <ScoreList showPagination={showPagination} />
       <Navigation />
     </>
   )
