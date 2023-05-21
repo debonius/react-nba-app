@@ -12,10 +12,23 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export default function SearchPlayerForm() {
     const [page, setPage] = useState<number>(1);
     const [tot_pages, setTot_pages] = useState<number | null>(null);
+    const [changedPage, setChangedPage] = useState<boolean>(false);
     const [playerInput, setPlayerInput] = useState<string>('');
     const [foundPlayers, setFoundPlayers] = useState<players>([]);
     const [noResults, setNoResults] = useState<boolean>(false);
     let btnText: string = 'Search';
+
+    const handleGoToPrevPage = () => {
+        setPage(page - 1);
+        setChangedPage(true);
+        handleSearchButton();
+    }
+
+    const handleGoToNextPage = () => {
+        setPage(page + 1);
+        setChangedPage(true);
+        handleSearchButton();
+    }
 
     function Pagination() {
         return (
@@ -114,6 +127,7 @@ export default function SearchPlayerForm() {
                     handleSearchButton={handleSearchButton}
                 />
             </Box>
+            <Pagination />
             <Results />
         </>
     );
