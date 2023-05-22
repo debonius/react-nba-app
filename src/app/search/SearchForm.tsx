@@ -17,7 +17,6 @@ export default function SearchPlayerForm() {
     const [changedPage, setChangedPage] = useState<boolean>(false);
     const [playerInput, setPlayerInput] = useState<string>('');
     const [teamInput, setTeamInput] = useState<string>('');
-    const [isDisabled, setIsDisabled] = useState<boolean>(false);
     const [foundPlayers, setFoundPlayers] = useState<players>([]);
     const [foundTeams, setFoundTeams] = useState<team[]>([]);
     const [noResults, setNoResults] = useState<boolean>(false);
@@ -90,7 +89,7 @@ export default function SearchPlayerForm() {
                 console.error(error);
             }
         }
-        else if (teamInput !== '') {
+        else if (teamInput !== '' && playerInput === '') {
             try {
                 const url = `https://free-nba.p.rapidapi.com/teams?page=${page}`;
                 const response = await fetch(url, options);
@@ -115,7 +114,7 @@ export default function SearchPlayerForm() {
                 {!noResults && foundPlayers !== undefined &&
                     <TeamsList teams={foundTeams} />
                 }
-                {noResults &&
+                {noResults === true &&
                     <p>No teams found</p>
                 }
             </>
@@ -125,10 +124,8 @@ export default function SearchPlayerForm() {
     function FoundTeamsResults() {
         return (
             <>
-                {!noResults && foundPlayers !== undefined &&
-                    <PlayersList playersList={foundPlayers} />
-                }
-                {noResults &&
+                <PlayersList playersList={foundPlayers} />
+                {noResults === true &&
                     <p>No players found</p>
                 }
             </>
@@ -146,30 +143,37 @@ export default function SearchPlayerForm() {
                 autoComplete="off"
                 className='search'
             >
-                <TextField
-                    id="search-name"
-                    label="Search player"
-                    type="search"
-                    variant="standard"
-                    value={playerInput}
-                    onChange={handleChangePlayerInput}
-                />
-                <TextField
-                    id="search-team"
-                    label="Search team"
-                    type="search"
-                    variant="standard"
-                    value={teamInput}
-                    onChange={handleChangeTeamInput}
-                />
+                {teamInput === '' &&
+                    <TextField
+                        id="search-name"
+                        label="Search player"
+                        type="search"
+                        variant="standard"
+                        value={playerInput}
+                        onChange={handleChangePlayerInput}
+                    />
+                }
+                {playerInput === '' &&
+                    <TextField
+                        id="search-team"
+                        label="Search team"
+                        type="search"
+                        variant="standard"
+                        value={teamInput}
+                        onChange={handleChangeTeamInput}
+                    />
+                }
                 <BasicButton
                     btnText={btnText}
                     handleSearchButton={handleSearchButton}
                 />
             </Box>
-            <Pagination />
-            <FoundPlayersResults />
-            <FoundTeamsResults />
+            {foundPlayers.length > 0 || foundTeams.length > 0 && <Pagination />}
+            {foundPlayers.length > 0 &&
+                <FoundPlayersResults />
+            }
+
+            {foundTeams.length > 0 && <FoundTeamsResults />}
         </>
     );
 }
