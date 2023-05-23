@@ -19,7 +19,8 @@ export default function SearchPlayerForm() {
     const [teamInput, setTeamInput] = useState<string>('');
     const [foundPlayers, setFoundPlayers] = useState<players>([]);
     const [foundTeams, setFoundTeams] = useState<team[]>([]);
-    const [noResults, setNoResults] = useState<boolean>(false);
+    const [noPlayerResults, setNoPlayerResults] = useState<boolean>(false);
+    const [noTeamResults, setNoTeamResults] = useState<boolean>(false);
     let btnText: string = 'Search';
 
     const url = `https://free-nba.p.rapidapi.com/players?page=${page}&per_page=25&search=${playerInput}`;
@@ -54,7 +55,7 @@ export default function SearchPlayerForm() {
                     />
                 }
                 <span>Page {page} {tot_pages && `of ${tot_pages}`}</span>
-                {page <= tot_pages &&
+                {tot_pages !== null && page <= tot_pages &&
                     <ArrowForwardIosIcon
                         className='pagination__btn-change-page button'
                         onClick={handleGoToNextPage}
@@ -66,26 +67,41 @@ export default function SearchPlayerForm() {
 
     function handleChangePlayerInput(e: React.ChangeEvent<HTMLInputElement>) {
         setPlayerInput(e.target.value);
+        if (e.target.value === '') {
+            setFoundPlayers([]);
+        }
     }
 
     function handleChangeTeamInput(e: React.ChangeEvent<HTMLInputElement>) {
         setTeamInput(e.target.value);
+        if (e.target.value === '') {
+            setFoundTeams([]);
+        }
     }
 
     async function handleSearchButton() {
+
         if (playerInput !== '' && teamInput === '') {
+
             try {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 console.log('result: ', result);
-                setTot_pages(result.meta.total_pages);
-                setFoundPlayers(result.data.sort((prev, next) => {
-                    const A = prev.last_name.toUpperCase();
-                    const B = next.last_name.toUpperCase();
-                    return A < B ? -1 : A > B ? +1 : 0;
-                }));
-                result.data.length === 0 ? setNoResults(true) : setNoResults(false);
-            } catch (error) {
+                if (result.data.length > 0) {
+                    setTot_pages(result.meta.total_pages);
+                    setFoundPlayers(result.data.sort((prev, next) => {
+                        const A = prev.last_name.toUpperCase();
+                        const B = next.last_name.toUpperCase();
+                        return A < B ? -1 : A > B ? +1 : 0;
+                    }));
+                    setNoPlayerResults(false);
+                }
+                else {
+                    setFoundTeams([]);
+                    setNoPlayerResults(true);
+                }
+            }
+            catch (error) {
                 console.error(error);
             }
         }
@@ -95,13 +111,19 @@ export default function SearchPlayerForm() {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 console.log('teamInput: ', teamInput);
-                setTot_pages(result.meta.total_pages);
-                setFoundTeams(result.data.filter(
-                    team => {
-                        if (team.full_name.toUpperCase().includes(teamInput.toUpperCase())) return team.full_name;
-                    })
-                );
-                result.data.length === 0 ? setNoResults(true) : setNoResults(false);
+                if (result.data.length > 0) {
+                    setTot_pages(result.meta.total_pages);
+                    setFoundTeams(result.data.filter(
+                        team => {
+                            if (team.full_name.toUpperCase().includes(teamInput.toUpperCase())) return team.full_name;
+                        })
+                    );
+                    setNoTeamResults(false)
+                }
+                else {
+                    setFoundTeams([]);
+                    setNoTeamResults(true);
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -111,11 +133,9 @@ export default function SearchPlayerForm() {
     function FoundPlayersResults() {
         return (
             <>
-                {!noResults && foundPlayers !== undefined &&
-                    <TeamsList teams={foundTeams} />
-                }
-                {noResults === true &&
-                    <p>No teams found</p>
+                {foundPlayers.length > 0 && <PlayersList playersList={foundPlayers} />}
+                {playerInput !== '' && noPlayerResults === true && foundPlayers.length === 0 &&
+                    <p>No players found</p>
                 }
             </>
         )
@@ -124,9 +144,9 @@ export default function SearchPlayerForm() {
     function FoundTeamsResults() {
         return (
             <>
-                <PlayersList playersList={foundPlayers} />
-                {noResults === true &&
-                    <p>No players found</p>
+                {foundTeams.length > 0 && <TeamsList teams={foundTeams} />}
+                {teamInput !== '' && noTeamResults === true && foundTeams.length === 0 &&
+                    <p>No teams found</p>
                 }
             </>
         )
@@ -168,12 +188,11 @@ export default function SearchPlayerForm() {
                     handleSearchButton={handleSearchButton}
                 />
             </Box>
-            {foundPlayers.length > 0 || foundTeams.length > 0 && <Pagination />}
-            {foundPlayers.length > 0 &&
-                <FoundPlayersResults />
+            {tot_pages !== null && tot_pages > 1 &&
+                <Pagination />
             }
-
-            {foundTeams.length > 0 && <FoundTeamsResults />}
+            {foundPlayers && <FoundPlayersResults />}
+            {foundTeams && <FoundTeamsResults />}
         </>
     );
 }
