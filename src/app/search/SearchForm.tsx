@@ -185,7 +185,7 @@ export default function SearchPlayerForm() {
                 }
                 <BasicButton
                     btnText={btnText}
-                    handleSearchButton={handleSearchButton}
+                    handleClick={handleSearchButton}
                 />
             </Box>
             {tot_pages !== null && tot_pages > 1 &&
