@@ -10,8 +10,8 @@ type players = player[];
 
 export default function Scores() {
     const [page, setPage] = useState<number>(1);
-    const [playersList, setPlayersList] = useState<players>();
-    const [tot_pages, setTot_pages] = useState<number | null>(null);
+    const [playersList, setPlayersList] = useState<players>([]);
+    const [tot_pages, setTot_pages] = useState<number>(0);
     const [changedPage, setChangedPage] = useState<boolean>(false);
 
     const handleGoToPrevPage = () => {
