@@ -18,12 +18,13 @@ function WelcomeMessage() {
 
 export default function Home() {
   const showPagination = false;
+  const initialPageSize = 5;
 
   return (
     <>
       <WelcomeMessage />
       <h1>Latest results</h1>
-      <ScoreList showPagination={showPagination} />
+      <ScoreList showPagination={showPagination} initialPageSize={initialPageSize} />
       <Navigation />
       <Link href="/scores" className='text-center'>
         All results
