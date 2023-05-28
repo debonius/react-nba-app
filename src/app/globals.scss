@@ -28,6 +28,12 @@ h4 {
     margin-bottom: 1rem;
 }
 
+ul {
+    li {
+        list-style-type: none;
+    }
+}
+
 // Colors
 $color-primary : #2361b7;
 $color-secondary : #c91e3a;
