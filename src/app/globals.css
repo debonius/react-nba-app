@@ -54,7 +54,6 @@ nav {
   background: #2361b7;
   text-align: center;
 }
-
 nav a,
 nav a:active,
 nav a:focus,
@@ -63,7 +62,6 @@ nav a:hover {
   color: white;
   text-decoration: none;
 }
-
 nav a span,
 nav a:active span,
 nav a:focus span,
@@ -86,11 +84,9 @@ nav a:hover span {
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
 .list .pagination__btn-change-page {
   cursor: pointer;
 }
-
 .list__row {
   display: flex;
   column-gap: 0.5rem;
@@ -103,25 +99,20 @@ nav a:hover span {
   border-radius: 1rem;
   border: 1px solid lightgray;
 }
-
 .list__row:hover {
   background: ghostwhite;
 }
-
 .list__row.teams {
   justify-content: flex-start;
 }
-
 .list__row.teams .team-name {
   font-weight: bold;
 }
-
 .list__vs {
   margin: auto 1rem;
   color: #333;
   font-weight: 600;
 }
-
 .list__score {
   font-weight: 600;
 }
@@ -131,4 +122,4 @@ nav a:hover span {
   flex-direction: column;
 }
 
-/*# sourceMappingURL=global.css.map */
+/*# sourceMappingURL=globals.css.map */
