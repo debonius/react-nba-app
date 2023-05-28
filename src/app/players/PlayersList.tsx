@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function PlayersList({ playersList = [] }) {
+export default function PlayersList({ playersList }) {
     const headers = [
         { id: 1, value: 'Name' },
         { id: 2, value: 'Position' },
