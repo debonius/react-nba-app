@@ -16,14 +16,14 @@ const OPTIONS = {
     }
 };
 
-export default function ScoreList({ showPagination, initialPageSize }) {
+export default function ScoreList({ showPagination }) {
     type games = game[];
     const [scores, setScores] = useState<games>([]);
     const [receivedScore, setReceivedScore] = useState<boolean>(false);
     const [lastPage, setLastPage] = useState<number>(6930);
 
     const [pageOptions, setPageOptions] = useState<pageOptions>({
-        page_size: initialPageSize,
+        page_size: 10,
         page: lastPage,
         tot_pages: null
     })
