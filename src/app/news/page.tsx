@@ -47,7 +47,7 @@ export default function News() {
                     results && results.map((r, index) => (
                         <li key={index}>
                             <h2>{r.title}</h2>
-                            <a href={r.url}>Read more</a>
+                            <a className='news' href={r.url}>Read more</a>
                             <span className='text--shadow'> (Source {r.source.toUpperCase()})</span>
                         </li>
                     ))
