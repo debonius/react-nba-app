@@ -11,9 +11,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TeamsList from '../components/shared/TeamsList';
 
-export default function SearchPlayerForm() {
+export default function SearchForm() {
     const [page, setPage] = useState<number>(1);
-    const [tot_pages, setTot_pages] = useState<number | null>(null);
+    const [tot_pages, setTot_pages] = useState<number | null>(0);
     const [changedPage, setChangedPage] = useState<boolean>(false);
     const [playerInput, setPlayerInput] = useState<string>('');
     const [teamInput, setTeamInput] = useState<string>('');
@@ -32,19 +32,20 @@ export default function SearchPlayerForm() {
         }
     };
 
-    const handleGoToPrevPage = () => {
-        setPage(page - 1);
-        setChangedPage(true);
-        handleSearchButton();
-    }
-
-    const handleGoToNextPage = () => {
-        setPage(page + 1);
-        setChangedPage(true);
-        handleSearchButton();
-    }
-
     function Pagination() {
+
+        const handleGoToPrevPage = () => {
+            setPage(page - 1);
+            setChangedPage(true);
+            handleSearchButton();
+        }
+
+        const handleGoToNextPage = () => {
+            setPage(page + 1);
+            setChangedPage(true);
+            handleSearchButton();
+        }
+
         return (
             <div className='pagination'>
                 {page > 1 &&
@@ -55,7 +56,7 @@ export default function SearchPlayerForm() {
                     />
                 }
                 <span>Page {page} {tot_pages && `of ${tot_pages}`}</span>
-                {tot_pages !== null && page <= tot_pages &&
+                {page < tot_pages &&
                     <ArrowForwardIosIcon
                         className='pagination__btn-change-page button'
                         onClick={handleGoToNextPage}
