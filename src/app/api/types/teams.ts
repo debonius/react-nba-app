@@ -5,3 +5,5 @@ export default interface team {
     division: string;
     full_name: string;
 }
+
+export type teams = team[];

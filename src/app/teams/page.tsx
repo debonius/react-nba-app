@@ -1,11 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Navigation from '../components/shared/Navigation';
-import team from '../api/types/teams';
+import teams from '../api/types/teams';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TeamsList from '../components/shared/TeamsList';
-// import { API_KEY } from '../api/api';
+// import { API_KEY } from '../api/api'
 
 const page = 1;
 
@@ -32,10 +32,8 @@ function Pagination({ handleGoToNextPage, handleGoToPrevPage }) {
     )
 }
 
-type teams = team[];
-
 export default function Teams() {
-    const [teams, setTeams] = useState<teams>([]);
+    const [teams, setTeams] = useState<teams>();
 
     function handleGoToPrevPage() {
         fetchTeams(1);
