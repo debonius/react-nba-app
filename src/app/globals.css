@@ -23,12 +23,12 @@ nav {
 }
 
 body {
-  padding: 0 1rem;
+  padding: 0 1rem 5rem 1rem;
   color: #333;
   background: white;
 }
 body:has(.css-quj9j6-MuiTable-root) {
-  padding: 2rem;
+  padding: 2rem 2rem 7rem 2rem;
 }
 
 h1,
