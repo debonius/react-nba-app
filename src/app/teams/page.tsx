@@ -5,7 +5,7 @@ import team from '../api/types/teams';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TeamsList from '../components/shared/TeamsList';
-import { API_KEY } from '../api/api';
+// import { API_KEY } from '../api/api';
 
 const page = 1;
 
@@ -50,7 +50,7 @@ export default function Teams() {
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': API_KEY,
+                'X-RapidAPI-Key': '0c008c7080msh10a514646ed797cp1182abjsn21ea7e48e462',
                 'X-RapidAPI-Host': 'free-nba.p.rapidapi.com'
             }
         };

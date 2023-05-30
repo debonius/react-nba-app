@@ -5,7 +5,7 @@ import game from '../../api/types/games';
 import pageOptions from '../../api/types/pageOptions';
 import * as React from 'react';
 import FullPagination from './FullPagination';
-import { API_KEY } from '@/app/api/api';
+// import { API_KEY } from '@/app/api/api';
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"];
@@ -13,7 +13,7 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
 const OPTIONS = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': API_KEY,
+        'X-RapidAPI-Key': '0c008c7080msh10a514646ed797cp1182abjsn21ea7e48e462',
     }
 };
 

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Navigation from '../components/shared/Navigation';
-import { NEWS_KEY } from '../api/api';
+// import { NEWS_KEY } from '../api/api';
 
 interface news {
     id: number,
@@ -19,7 +19,7 @@ export default function News() {
         const OPTIONS = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': NEWS_KEY,
+                'X-RapidAPI-Key': '0c008c7080msh10a514646ed797cp1182abjsn21ea7e48e462',
                 'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com'
             }
         };
